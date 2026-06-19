@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>અક્ષર ટ્યુટોરીયલ્સ મેનેજર</title>
+    <!-- Tailwind CSS (ડિઝાઇન માટે) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        try {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                50: '#f5f3ff',
+                                100: '#ede9fe',
+                                500: '#8b5cf6',
+                                600: '#7c3aed',
+                                700: '#6d28d9',
+                                900: '#4c1d95'
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            console.error("Tailwind loading skipped.");
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-tr from-slate-100 via-violet-50 to-blue-50 font-sans text-slate-800 antialiased min-h-screen">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- SIDEBAR (કોમ્પ્યુટર અને ટેબલેટ માટે) -->
+        <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col justify-between hidden md:flex border-r border-slate-800 shadow-2xl">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="p-2.5 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-2xl text-white shadow-lg shadow-violet-500/30">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5M21.5 12H18"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-extrabold text-white tracking-wide bg-gradient-to-r from-violet-200 to-fuchsia-300 bg-clip-text text-transparent">અક્ષર ટ્યુટોરીયલ્સ</h1>
+                        <span class="text-[10px] text-emerald-400 font-extrabold uppercase tracking-widest">મેનેજમેન્ટ સિસ્ટમ</span>
+                    </div>
+                </div>
+                
+                <nav class="space-y-2">
+                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold transition shadow-lg shadow-violet-600/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                        ડેશબોર્ડ
+                    </button>
+                    <button onclick="switchTab('students')" id="btn-students" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        વિદ્યાર્થીઓ
+                    </button>
+                    <button onclick="switchTab('attendance')" id="btn-attendance" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                        હાજરી પત્રક
+                    </button>
+                    <button onclick="switchTab('fees')" id="btn-fees" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                        ફી કલેક્શન
+                    </button>
+                    <button onclick="switchTab('tests')" id="btn-tests" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                        પરીક્ષાઓ
+                    </button>
+                </nav>
+            </div>
+            <div class="p-6 border-t border-slate-800 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-white shadow">AD</div>
+                <div>
+                    <p class="text-xs font-bold text-white">એડમિન મોડ</p>
+                    <p class="text-[10px] text-violet-400 font-medium">મોબાઈલ રિસ્પોન્સિવ</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            
+            <!-- TOP BAR -->
+            <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+                <div>
+                    <h2 id="page-title" class="text-2xl font-black text-slate-900 bg-gradient-to-r from-slate-900 to-violet-800 bg-clip-text text-transparent">ડેશબોર્ડ</h2>
+                    <p id="page-subtitle" class="text-xs font-medium text-slate-500 mt-0.5">ક્લાસની આજની સ્થિતિ</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 text-xs bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold px-3 py-1.5 rounded-xl shadow-md shadow-violet-500/10">
+                        <span id="current-date">આજની તારીખ</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN CONTAINER -->
+            <main class="p-4 md:p-6 pb-28 max-w-[1400px] w-full mx-auto flex-1">
+                
+                <!-- 1. DASHBOARD TAB -->
+                <div id="tab-dashboard" class="tab-content space-y-6">
+                    <!-- Colorful Gradients Stats Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                        <!-- Card 1: Students (Indigo Gradient) -->
+                        <div class="bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 p-6 rounded-3xl text-white shadow-xl shadow-indigo-500/20 flex justify-between items-center relative overflow-hidden group">
+                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
+                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="z-10">
+                                <span class="text-xs text-indigo-100 font-extrabold uppercase tracking-widest">કુલ વિદ્યાર્થીઓ</span>
+                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-total-students">0</h3>
+                            </div>
+                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            </div>
+                        </div>
+                        <!-- Card 2: Attendance (Emerald Gradient) -->
+                        <div class="bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-600 p-6 rounded-3xl text-white shadow-xl shadow-emerald-500/20 flex justify-between items-center relative overflow-hidden group">
+                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
+                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="m9 16 2 2 4-4"/></svg>
+                            </div>
+                            <div class="z-10">
+                                <span class="text-xs text-emerald-100 font-extrabold uppercase tracking-widest">આજની હાજરી</span>
+                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-attendance-rate">0%</h3>
+                            </div>
+                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="m9 16 2 2 4-4"/></svg>
+                            </div>
+                        </div>
+                        <!-- Card 3: Collected Fees (Cyan to Blue) -->
+                        <div class="bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 p-6 rounded-3xl text-white shadow-xl shadow-blue-500/20 flex justify-between items-center relative overflow-hidden group">
+                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
+                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                            </div>
+                            <div class="z-10">
+                                <span class="text-xs text-blue-100 font-extrabold uppercase tracking-widest">જમા થયેલ ફી</span>
+                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-collected-fees">₹0</h3>
+                            </div>
+                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                            </div>
+                        </div>
+                        <!-- Card 4: Pending Fees (Amber to Rose) -->
+                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-rose-600 p-6 rounded-3xl text-white shadow-xl shadow-orange-500/20 flex justify-between items-center relative overflow-hidden group">
+                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
+                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                            </div>
+                            <div class="z-10">
+                                <span class="text-xs text-amber-100 font-extrabold uppercase tracking-widest">બાકી ફી</span>
+                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-pending-fees">₹0</h3>
+                            </div>
+                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick View Tables -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Recent Admissions Table -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 shadow-xl shadow-slate-100/40">
+                            <h4 class="font-black text-slate-950 mb-4 flex items-center gap-2 text-base">
+                                <span class="w-2.5 h-2.5 rounded-full bg-violet-600"></span>
+                                તાજેતરના એડમિશન
+                            </h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                            <th class="pb-3">વિદ્યાર્થી નામ</th>
+                                            <th class="pb-3 text-right">ધોરણ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-recent-students" class="divide-y divide-slate-100 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Pending Fees Table -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 shadow-xl shadow-slate-100/40">
+                            <h4 class="font-black text-rose-600 mb-4 flex items-center gap-2 text-base">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
+                                બાકી ફી લિસ્ટ
+                            </h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                            <th class="pb-3">વિદ્યાર્થી નામ</th>
+                                            <th class="pb-3 text-right">બાકી ફી</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-pending-list" class="divide-y divide-slate-100 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. STUDENTS TAB -->
+                <div id="tab-students" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Left: Register Form -->
+                    <div class="lg:col-span-4 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40 h-fit">
+                        <h3 class="font-black text-slate-900 mb-4 text-lg">નવું એડમિશન</h3>
+                        <form id="add-student-form" onsubmit="saveStudent(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">વિદ્યાર્થીનું આખું નામ</label>
+                                <input type="text" id="stu-name" required placeholder="દા.ત. રાહુલ મહેતા" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ધોરણ</label>
+                                    <select id="stu-class" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
+                                        <option value="ધોરણ 8">ધોરણ 8</option>
+                                        <option value="ધોરણ 9">ધોરણ 9</option>
+                                        <option value="ધોરણ 10">ધોરણ 10</option>
+                                        <option value="ધોરણ 11">ધોરણ 11</option>
+                                        <option value="ધોરણ 12">ધોરણ 12</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">બેચ</label>
+                                    <select id="stu-batch" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
+                                        <option value="સવારે 08-10">સવારે 08-10</option>
+                                        <option value="બપોરે 12-02">બપોરે 12-02</option>
+                                        <option value="સાંજે 04-06">સાંજે 04-06</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">વાલીનો મોબાઇલ નંબર</label>
+                                <input type="tel" id="stu-phone" required pattern="[0-9]{10}" placeholder="૧૦ આંકડાનો મોબાઈલ" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">માસિક ફી (₹)</label>
+                                <input type="number" id="stu-fees" required value="1000" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-extrabold py-3 rounded-2xl text-sm transition shadow-lg shadow-violet-500/20">
+                                એડમિશન સેવ કરો
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Table List -->
+                    <div class="lg:col-span-8 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                            <h3 class="font-black text-slate-900 text-xl">વિદ્યાર્થીઓની યાદી</h3>
+                            <div class="flex gap-2 w-full sm:w-auto">
+                                <input type="text" id="search-student" oninput="renderStudents()" placeholder="સર્ચ..." class="px-4 py-2.5 border border-slate-200 rounded-2xl text-sm w-full sm:w-48 outline-none focus:ring-2 focus:ring-violet-400 transition">
+                                <select id="filter-class" onchange="renderStudents()" class="px-3 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white font-semibold text-slate-700">
+                                    <option value="all">બધા ધોરણ</option>
+                                    <option value="ધોરણ 8">ધોરણ 8</option>
+                                    <option value="ધોરણ 9">ધોરણ 9</option>
+                                    <option value="ધોરણ 10">ધોરણ 10</option>
+                                    <option value="ધોરણ 11">ધોરણ 11</option>
+                                    <option value="ધોરણ 12">ધોરણ 12</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                        <th class="pb-3 px-2">નામ</th>
+                                        <th class="pb-3 px-2">ધોરણ</th>
+                                        <th class="pb-3 px-2 text-center">ક્રિયા</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="students-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. ATTENDANCE TAB -->
+                <div id="tab-attendance" class="tab-content hidden space-y-6">
+                    <div class="bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                            <div>
+                                <h3 class="font-black text-slate-900 text-xl">હાજરી પત્રક</h3>
+                                <p class="text-xs font-semibold text-slate-400 mt-0.5">વિદ્યાર્થીઓની લાઈવ દૈનિક હાજરી પૂરો</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                                <input type="date" id="attendance-date" onchange="loadAttendance()" class="px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition bg-white font-bold text-slate-700">
+                                <button onclick="markAllAttendance(true)" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-2xl text-xs font-extrabold shadow-md shadow-emerald-500/20 transition">બધા હાજર</button>
+                                <button onclick="markAllAttendance(false)" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2.5 rounded-2xl text-xs font-extrabold shadow-md shadow-rose-500/20 transition">બધા ગેરહાજર</button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                        <th class="pb-3 px-2">વિદ્યાર્થી નામ</th>
+                                        <th class="pb-3 px-2 text-center">હાજરી સ્થિતિ (P/A)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. FEES TAB -->
+                <div id="tab-fees" class="tab-content hidden space-y-6">
+                    <div class="bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
+                        <h3 class="font-black text-slate-900 text-xl mb-4">ફી ટ્રેકર ડેસ્ક</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                        <th class="pb-3 px-2">વિદ્યાર્થી નામ</th>
+                                        <th class="pb-3 px-2">બાકી ફી</th>
+                                        <th class="pb-3 px-2 text-center">એક્શન</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fees-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. TESTS TAB -->
+                <div id="tab-tests" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Create Test Form -->
+                    <div class="lg:col-span-4 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl h-fit">
+                        <h3 class="font-black text-slate-900 mb-4 text-lg">નવો ટેસ્ટ</h3>
+                        <form id="test-form" onsubmit="createTest(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ટેસ્ટનું નામ</label>
+                                <input type="text" id="test-name" required placeholder="દા.ત. યુનિટ ટેસ્ટ-૧" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ધોરણ</label>
+                                    <select id="test-class" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
+                                        <option value="ધોરણ 8">ધોરણ 8</option>
+                                        <option value="ધોરણ 9">ધોરણ 9</option>
+                                        <option value="ધોરણ 10">ધોરણ 10</option>
+                                        <option value="ધોરણ 11">ધોરણ 11</option>
+                                        <option value="ધોરણ 12">ધોરણ 12</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">કુલ ગુણ</label>
+                                    <input type="number" id="test-total-marks" required value="25" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-extrabold py-3 rounded-2xl text-sm transition shadow-lg shadow-violet-500/20">
+                                ટેસ્ટ પેપર બનાવો
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Test Records List -->
+                    <div class="lg:col-span-8 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-black text-slate-900 text-xl">ગુણ પત્રક એન્ટ્રી</h3>
+                            <select id="select-test" onchange="renderTestMarks()" class="px-3 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white font-semibold text-slate-700 shadow-sm">
+                                <option value="">ટેસ્ટ પસંદ કરો...</option>
+                            </select>
+                        </div>
+
+                        <div id="test-marks-container" class="hidden space-y-4">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
+                                            <th class="pb-3 px-2">નામ</th>
+                                            <th class="pb-3 px-2 text-center" id="test-total-label">ગુણ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="test-students-body" class="divide-y divide-slate-100 text-sm"></tbody>
+                                </table>
+                            </div>
+                            <button onclick="saveMarks()" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-extrabold px-6 py-2.5 rounded-2xl text-sm transition ml-auto block shadow-md shadow-emerald-500/20">
+                                ગુણ સાચવો
+                            </button>
+                        </div>
+                        <div id="test-placeholder" class="text-center py-12 text-slate-400 font-medium">
+                            <svg class="w-12 h-12 mx-auto text-slate-300 stroke-1 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            માર્ક્સ એન્ટ્રી કરવા માટે ઉપરથી ટેસ્ટ પસંદ કરો.
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION (મોબાઈલ માટે ખાસ કલરફુલ ગ્લાસમોર્ફિક મેનૂ બાર) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800/80 flex justify-around py-3.5 z-50 md:hidden shadow-2xl rounded-t-[2rem]">
+        <button onclick="switchTab('dashboard')" id="mbtn-dashboard" class="mobile-tab-btn flex flex-col items-center text-violet-400 font-extrabold py-1 transition scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+            <span class="text-[10px] mt-1 tracking-wider">હોમ</span>
+        </button>
+        <button onclick="switchTab('students')" id="mbtn-students" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span class="text-[10px] mt-1 tracking-wider">વિદ્યાર્થી</span>
+        </button>
+        <button onclick="switchTab('attendance')" id="mbtn-attendance" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+            <span class="text-[10px] mt-1 tracking-wider">હાજરી</span>
+        </button>
+        <button onclick="switchTab('fees')" id="mbtn-fees" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            <span class="text-[10px] mt-1 tracking-wider">ફી</span>
+        </button>
+        <button onclick="switchTab('tests')" id="mbtn-tests" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            <span class="text-[10px] mt-1 tracking-wider">ટેસ્ટ</span>
+        </button>
+    </div>
+
+    <!-- MAIN APP LOGIC (JAVASCRIPT) -->
+    <script>
+        // MOCK DATA ON FIRST LAUNCH
+        var initialStudents = [
+            { id: 1, name: "ધ્રુવ પ્રજાપતિ", class: "ધોરણ 10", batch: "સાંજે 04-06", phone: "9876543210", monthlyFees: 1200, paidFees: 1200, lastPaidDate: "10/06/2026" },
+            { id: 2, name: "ખુશી શાહ", class: "ધોરણ 12", batch: "સવારે 08-10", phone: "9123456789", monthlyFees: 1500, paidFees: 0, lastPaidDate: "-" },
+            { id: 3, name: "ઓમ વ્યાસ", class: "ધોરણ 10", batch: "સાંજે 04-06", phone: "8877665544", monthlyFees: 1200, paidFees: 600, lastPaidDate: "14/06/2026" }
+        ];
+
+        var initialTests = [
+            { id: 101, name: "ગણિત - ટેસ્ટ 1", class: "ધોરણ 10", totalMarks: 30, marks: { 1: 28, 3: 15 } }
+        ];
+
+        var students = initialStudents;
+        var attendanceDb = {};
+        var tests = initialTests;
+
+        // SAFE LOCAL STORAGE READ
+        try {
+            students = JSON.parse(localStorage.getItem('tc_students')) || initialStudents;
+            attendanceDb = JSON.parse(localStorage.getItem('tc_attendance')) || {};
+            tests = JSON.parse(localStorage.getItem('tc_tests')) || initialTests;
+        } catch (e) {
+            console.warn("LocalStorage blocked. Falling back to temporary memory.");
+        }
+
+        // SAFE TODAY STR GENERATION
+        var todayStr = "";
+        try {
+            todayStr = new Date().toISOString().split('T')[0];
+        } catch (e) {
+            var d = new Date();
+            todayStr = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+        }
+
+        document.getElementById('attendance-date').value = todayStr;
+
+        // SAFE DATE FORMATTING FOR GUJARATI
+        var formattedDate = "";
+        try {
+            formattedDate = new Date().toLocaleDateString('gu-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        } catch (e) {
+            formattedDate = new Date().toDateString();
+        }
+        document.getElementById('current-date').innerText = formattedDate;
+
+        // UTILITY: SAVE TO LOCALSTORAGE
+        function saveData() {
+            try {
+                localStorage.setItem('tc_students', JSON.stringify(students));
+                localStorage.setItem('tc_attendance', JSON.stringify(attendanceDb));
+                localStorage.setItem('tc_tests', JSON.stringify(tests));
+            } catch (e) {
+                console.warn("Save failed.");
+            }
+            renderDashboard();
+        }
+
+        // TAB NAVIGATION
+        function switchTab(tabId) {
+            try {
+                // Hide all contents
+                var contents = document.querySelectorAll('.tab-content');
+                for (var i = 0; i < contents.length; i++) {
+                    contents[i].classList.add('hidden');
+                }
+                
+                // Reset Sidebar Buttons (Desktop)
+                var sidebarBtns = document.querySelectorAll('.tab-btn');
+                for (var j = 0; j < sidebarBtns.length; j++) {
+                    sidebarBtns[j].className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition";
+                }
+
+                // Reset Bottom Navigation Buttons (Mobile)
+                var mobileBtns = document.querySelectorAll('.mobile-tab-btn');
+                for (var k = 0; k < mobileBtns.length; k++) {
+                    mobileBtns[k].className = "mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition";
+                }
+
+                // Show Selected Tab Content
+                var activeTab = document.getElementById("tab-" + tabId);
+                if (activeTab) {
+                    activeTab.classList.remove('hidden');
+                }
+
+                // Set Active Sidebar Button
+                var activeBtn = document.getElementById("btn-" + tabId);
+                if (activeBtn) {
+                    activeBtn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold transition shadow-lg shadow-violet-600/30";
+                }
+
+                // Set Active Mobile Button
+                var activeMobileBtn = document.getElementById("mbtn-" + tabId);
+                if (activeMobileBtn) {
+                    activeMobileBtn.className = "mobile-tab-btn flex flex-col items-center text-violet-400 font-extrabold py-1 transition scale-105";
+                }
+
+                // Update Titles
+                var titles = {
+                    dashboard: { main: "ડેશબોર્ડ", sub: "ક્લાસની આજની સ્થિતિ" },
+                    students: { main: "એડમિશન", sub: "નવા વિદ્યાર્થીઓ ઉમેરો" },
+                    attendance: { main: "હાજરી પત્રક", sub: "દૈનિક હાજરીનો રેકોર્ડ" },
+                    fees: { main: "ફી કલેક્શન", sub: "ફી ટ્રેકર" },
+                    tests: { main: "પરીક્ષા", sub: "માર્ક્સ અને પરિણામો" }
+                };
+
+                if (titles[tabId]) {
+                    document.getElementById('page-title').innerText = titles[tabId].main;
+                    document.getElementById('page-subtitle').innerText = titles[tabId].sub;
+                }
+
+                // Specific Renderers
+                if (tabId === 'students') renderStudents();
+                if (tabId === 'attendance') loadAttendance();
+                if (tabId === 'fees') renderFees();
+                if (tabId === 'tests') loadTestsSelector();
+                
+            } catch (err) {
+                console.error("Error in switchTab: " + err.message);
+            }
+        }
+
+        // --- DASHBOARD ---
+        function renderDashboard() {
+            try {
+                var total = students.length;
+                document.getElementById('dash-total-students').innerText = total;
+
+                var todayRecord = attendanceDb[todayStr] || {};
+                var totalPresent = Object.keys(todayRecord).filter(function(k) { return todayRecord[k] === 'P'; }).length;
+                var attendanceRate = total > 0 ? Math.round((totalPresent / total) * 100) : 0;
+                document.getElementById('dash-attendance-rate').innerText = attendanceRate + "%";
+
+                var collected = students.reduce(function(sum, s) { return sum + s.paidFees; }, 0);
+                var totalRequired = students.reduce(function(sum, s) { return sum + s.monthlyFees; }, 0);
+                var pending = Math.max(0, totalRequired - collected);
+
+                document.getElementById('dash-collected-fees').innerText = "₹" + collected;
+                document.getElementById('dash-pending-fees').innerText = "₹" + pending;
+
+                // Recent Students Table
+                var recentBody = document.getElementById('dash-recent-students');
+                recentBody.innerHTML = '';
+                students.slice(-3).reverse().forEach(function(s) {
+                    recentBody.innerHTML += '<tr class="hover:bg-violet-50/50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800">' + s.name + '</td><td class="py-3 px-2 text-slate-500 text-xs text-right font-medium">' + s.class + '</td></tr>';
+                });
+
+                // Pending Fees Table
+                var pendingBody = document.getElementById('dash-pending-list');
+                pendingBody.innerHTML = '';
+                students.filter(function(s) { return s.monthlyFees - s.paidFees > 0; }).slice(0, 3).forEach(function(s) {
+                    var due = s.monthlyFees - s.paidFees;
+                    pendingBody.innerHTML += '<tr class="hover:bg-rose-50/50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800">' + s.name + '</td><td class="py-3 px-2 text-rose-600 font-extrabold text-xs text-right">₹' + due + '</td></tr>';
+                });
+            } catch (err) {
+                console.error("Error in renderDashboard: " + err.message);
+            }
+        }
+
+        // --- STUDENTS ---
+        function saveStudent(event) {
+            event.preventDefault();
+            try {
+                var name = document.getElementById('stu-name').value;
+                var cls = document.getElementById('stu-class').value;
+                var batch = document.getElementById('stu-batch').value;
+                var phone = document.getElementById('stu-phone').value;
+                var fees = parseInt(document.getElementById('stu-fees').value);
+
+                var newStudent = {
+                    id: Date.now(),
+                    name: name,
+                    class: cls,
+                    batch: batch,
+                    phone: phone,
+                    monthlyFees: fees,
+                    paidFees: 0,
+                    lastPaidDate: "-"
+                };
+
+                students.push(newStudent);
+                saveData();
+                document.getElementById('add-student-form').reset();
+                renderStudents();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function deleteStudent(id) {
+            if (confirm("આ વિદ્યાર્થીનું એડમિશન રદ કરવા માંગો છો?")) {
+                students = students.filter(function(s) { return s.id !== id; });
+                saveData();
+                renderStudents();
+            }
+        }
+
+        function renderStudents() {
+            try {
+                var tbody = document.getElementById('students-list-body');
+                var searchVal = document.getElementById('search-student').value.toLowerCase();
+                var classFilter = document.getElementById('filter-class').value;
+
+                tbody.innerHTML = '';
+                var filtered = students.filter(function(s) {
+                    var matchesSearch = s.name.toLowerCase().indexOf(searchVal) !== -1;
+                    var matchesClass = classFilter === 'all' || s.class === classFilter;
+                    return matchesSearch && matchesClass;
+                });
+
+                filtered.forEach(function(s) {
+                    tbody.innerHTML += '<tr class="hover:bg-violet-50/30 border-b border-slate-100"><td class="py-3.5 px-2 font-bold text-slate-800 text-xs">' + s.name + '</td><td class="py-3.5 px-2 text-slate-500 font-semibold text-xs">' + s.class + '</td><td class="py-3.5 px-2 text-center"><button onclick="deleteStudent(' + s.id + ')" class="text-rose-500 hover:text-rose-700 p-1.5 hover:bg-rose-50 rounded-xl transition inline-flex items-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></td></tr>';
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // --- ATTENDANCE ---
+        function loadAttendance() {
+            try {
+                var date = document.getElementById('attendance-date').value;
+                if (!attendanceDb[date]) {
+                    attendanceDb[date] = {};
+                }
+
+                var tbody = document.getElementById('attendance-list-body');
+                tbody.innerHTML = '';
+
+                students.forEach(function(s) {
+                    var status = attendanceDb[date][s.id] || 'A';
+                    var btnP = status === 'P' ? 'bg-gradient-to-r from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-500/20' : 'bg-slate-100 text-slate-500';
+                    var btnA = status === 'A' ? 'bg-gradient-to-r from-rose-400 to-rose-600 text-white shadow-md shadow-rose-500/20' : 'bg-slate-100 text-slate-500';
+
+                    tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-150"><td class="py-3 px-2 font-extrabold text-slate-800 text-xs">' + s.name + ' <span class="text-[9px] text-slate-400 font-bold">(' + s.class + ')</span></td><td class="py-3 text-center flex justify-center gap-2"><button onclick="setAttendance(\'' + date + '\', ' + s.id + ', \'P\')" class="px-3.5 py-1.5 rounded-2xl text-xs font-black transition ' + btnP + '">P</button><button onclick="setAttendance(\'' + date + '\', ' + s.id + ', \'A\')" class="px-3.5 py-1.5 rounded-2xl text-xs font-black transition ' + btnA + '">A</button></td></tr>';
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function setAttendance(date, stuId, status) {
+            attendanceDb[date][stuId] = status;
+            saveData();
+            loadAttendance();
+        }
+
+        // --- FEES ---
+        function renderFees() {
+            try {
+                var tbody = document.getElementById('fees-list-body');
+                tbody.innerHTML = '';
+
+                students.forEach(function(s) {
+                    var pending = s.monthlyFees - s.paidFees;
+                    var btnState = pending === 0 ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-inner' : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20 font-bold';
+                    var disabledStr = pending === 0 ? 'disabled' : '';
+
+                    tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="py-4 px-2 font-bold text-slate-800 text-xs">' + s.name + ' <span class="text-[9px] text-slate-400">(' + s.class + ')</span></td><td class="py-4 px-2 font-extrabold text-xs ' + (pending > 0 ? 'text-rose-600' : 'text-slate-400') + '">₹' + pending + '</td><td class="py-4 px-2 text-center"><button onclick="payFeeDialog(' + s.id + ', ' + pending + ')" class="text-[10px] uppercase font-black px-3 py-1.5 rounded-2xl transition ' + btnState + '" ' + disabledStr + '>જમા</button></td></tr>';
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function payFeeDialog(id, maxAmount) {
+            var amount = prompt("ફી જમા કરો (મહત્તમ બાકી: ₹" + maxAmount + "):", maxAmount);
+            if (amount === null) return;
+            
+            var payVal = parseInt(amount);
+            if (isNaN(payVal) || payVal <= 0 || payVal > maxAmount) {
+                alert("મહેરબાની કરીને સાચી રકમ દાખલ કરો.");
+                return;
+            }
+
+            var student = students.find(function(s) { return s.id === id; });
+            if (student) {
+                student.paidFees += payVal;
+                student.lastPaidDate = new Date().toLocaleDateString('gu-IN');
+                saveData();
+                renderFees();
+            }
+        }
+
+        // --- TESTS ---
+        function loadTestsSelector() {
+            var select = document.getElementById('select-test');
+            select.innerHTML = '<option value="">ટેસ્ટ પસંદ કરો...</option>';
+            tests.forEach(function(t) {
+                select.innerHTML += '<option value="' + t.id + '">' + t.name + ' (' + t.class + ')</option>';
+            });
+            document.getElementById('test-marks-container').classList.add('hidden');
+            document.getElementById('test-placeholder').classList.remove('hidden');
+        }
+
+        function createTest(event) {
+            event.preventDefault();
+            var name = document.getElementById('test-name').value;
+            var cls = document.getElementById('test-class').value;
+            var total = parseInt(document.getElementById('test-total-marks').value);
+
+            var newTest = {
+                id: Date.now(),
+                name: name,
+                class: cls,
+                totalMarks: total,
+                marks: {}
+            };
+
+            tests.push(newTest);
+            saveData();
+            document.getElementById('test-form').reset();
+            loadTestsSelector();
+        }
+
+        var activeTestId = null;
+
+        function renderTestMarks() {
+            var testId = document.getElementById('select-test').value;
+            if (!testId) {
+                document.getElementById('test-marks-container').classList.add('hidden');
+                document.getElementById('test-placeholder').classList.remove('hidden');
+                return;
+            }
+
+            activeTestId = parseInt(testId);
+            var test = tests.find(function(t) { return t.id === activeTestId; });
+            if (!test) return;
+
+            document.getElementById('test-placeholder').classList.add('hidden');
+            document.getElementById('test-marks-container').classList.remove('hidden');
+            document.getElementById('test-total-label').innerText = "ગુણ (કુલ: " + test.totalMarks + ")";
+
+            var tbody = document.getElementById('test-students-body');
+            tbody.innerHTML = '';
+
+            var classStudents = students.filter(function(s) { return s.class === test.class; });
+
+            if (classStudents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="text-center py-6 text-slate-400">વિદ્યાર્થીઓ નથી.</td></tr>';
+                return;
+            }
+
+            classStudents.forEach(function(s) {
+                var currentScore = test.marks[s.id] !== undefined ? test.marks[s.id] : '';
+                tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800 text-xs">' + s.name + '</td><td class="py-3 text-center"><input type="number" data-student-id="' + s.id + '" min="0" max="' + test.totalMarks + '" value="' + currentScore + '" class="stu-mark-input w-20 text-center px-2 py-1.5 border border-slate-200 focus:ring-2 focus:ring-violet-400 outline-none rounded-xl font-extrabold text-xs"></td></tr>';
+            });
+        }
+
+        function saveMarks() {
+            if (!activeTestId) return;
+            var test = tests.find(function(t) { return t.id === activeTestId; });
+            if (!test) return;
+
+            var inputs = document.querySelectorAll('.stu-mark-input');
+            var hasError = false;
+
+            inputs.forEach(function(input) {
+                var sId = input.getAttribute('data-student-id');
+                var val = input.value;
+
+                if (val !== '') {
+                    var mark = parseInt(val);
+                    if (mark < 0 || mark > test.totalMarks) {
+                        hasError = true;
+                        input.classList.add('border-rose-500');
+                    } else {
+                        test.marks[sId] = mark;
+                        input.classList.remove('border-rose-500');
+                    }
+                } else {
+                    delete test.marks[sId];
+                }
+            });
+
+            if (hasError) {
+                alert("સાચા ગુણ દાખલ કરો.");
+                return;
+            }
+
+            saveData();
+            alert("પરિણામ સફળતાપૂર્વક સાચવવામાં આવ્યું છે.");
+            renderTestMarks();
+        }
+
+        // INITIALISATION ON LOAD
+        try {
+            renderDashboard();
+        } catch (e) {
+            console.error("Initialization error", e);
+        }
+    </script>
+</body>
+</html>
