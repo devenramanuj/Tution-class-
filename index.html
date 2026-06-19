@@ -25,9 +25,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .login-box{
   background:var(--navy2);border:1px solid rgba(244,161,29,.2);
   border-radius:20px;padding:2.5rem 2rem;width:340px;text-align:center;
-  animation:fadeUp .5s ease;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .login-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.6rem;color:var(--saffron);margin-bottom:.3rem}
 .login-logo span{color:#fff}
 .login-sub{color:rgba(255,255,255,.45);font-size:.85rem;margin-bottom:1.8rem}
@@ -35,7 +33,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
   border-radius:10px;padding:12px 14px;color:#fff;
   font-family:'Hind Vadodara',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;
-  transition:border-color .2s;
 }
 .login-box input:focus{border-color:var(--saffron)}
 .login-box input::placeholder{color:rgba(255,255,255,.3)}
@@ -48,7 +45,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   font-family:'Hind Vadodara',sans-serif;transition:all .2s;
 }
 .btn:hover{background:var(--gold);transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
 .btn-full{width:100%;justify-content:center}
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--slate)}
 .btn-outline:hover{border-color:var(--saffron);color:var(--saffron);background:transparent;transform:none}
@@ -64,7 +60,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);
   background:var(--navy);z-index:50;overflow-y:auto;
   display:flex;flex-direction:column;
-  transition:transform .3s;
 }
 .sb-logo{
   padding:1.4rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.08);
@@ -92,18 +87,18 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   margin-bottom:1.5rem;
 }
 .page-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.4rem}
+.page-title small{font-size:.85rem;color:var(--slate);font-weight:400;font-family:'Hind Vadodara',sans-serif}
 
 /* ── PAGES ── */
 .page{display:none}
-.page.active{display:block;animation:fadeUp .3s ease}
+.page.active{display:block}
 
 /* ── CARDS ── */
 .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
 .stat-card{
   background:var(--white);border-radius:14px;padding:1.2rem;
-  border:1px solid var(--border);transition:transform .2s,box-shadow .2s;
+  border:1px solid var(--border);
 }
-.stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.06)}
 .stat-card .s-icon{font-size:1.6rem;margin-bottom:.5rem}
 .stat-card .s-num{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.8rem;color:var(--navy)}
 .stat-card .s-label{font-size:.8rem;color:var(--slate);margin-top:2px}
@@ -112,13 +107,13 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .stat-card.accent .s-num{color:var(--saffron)}
 
 /* ── TABLE ── */
-.card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.2rem}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow-x:auto;margin-bottom:1.2rem}
 .card-header{
   display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.2rem;border-bottom:1px solid var(--border);
 }
 .card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem}
-.tbl{width:100%;border-collapse:collapse}
+.tbl{width:100%;border-collapse:collapse;min-width:650px}
 .tbl th{
   background:var(--chalk);color:var(--slate);
   font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px;
@@ -138,14 +133,11 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .modal-bg{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
   z-index:200;align-items:center;justify-content:center;padding:1rem;
-  animation:fadeIn .2s;
 }
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal-bg.open{display:flex}
 .modal{
   background:var(--white);border-radius:16px;width:100%;max-width:480px;
   max-height:90vh;overflow-y:auto;
-  animation:fadeUp .3s ease;
 }
 .modal-head{
   display:flex;align-items:center;justify-content:space-between;
@@ -154,8 +146,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   position:sticky;top:0;background:var(--white);z-index:1;
 }
 .modal-body{padding:1.4rem}
-.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--slate);transition:color .15s}
-.modal-close:hover{color:var(--red)}
+.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--slate)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 .form-grid.full{grid-template-columns:1fr}
 .field{display:flex;flex-direction:column;gap:4px}
@@ -219,9 +210,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .notice-card{
   background:var(--white);border:1px solid var(--border);
   border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:.8rem;
-  transition:box-shadow .2s;
 }
-.notice-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.05)}
 .notice-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
 .notice-meta{font-size:.78rem;color:var(--slate);margin-bottom:.5rem}
 .notice-body{font-size:.88rem;color:var(--slate);line-height:1.6}
@@ -244,7 +233,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .search-bar input{
   flex:1;min-width:180px;background:var(--white);border:1.5px solid var(--border);
   border-radius:9px;padding:9px 13px;font-family:'Hind Vadodara',sans-serif;
-  font-size:.9rem;outline:none;transition:border-color .2s;
+  font-size:.9rem;outline:none;
 }
 .search-bar input:focus{border-color:var(--saffron)}
 .search-bar select{
@@ -257,14 +246,12 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .fee-bar{height:6px;background:var(--border);border-radius:99px;margin-top:4px}
 .fee-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width .4s}
 
-/* confirm modal */
-.confirm-box{
-  text-align:center;padding:2rem 1.5rem;
+/* dash grid default style */
+#dashGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
-.confirm-box .confirm-icon{font-size:2.5rem;margin-bottom:.8rem}
-.confirm-box .confirm-msg{font-size:1rem;font-weight:600;margin-bottom:.3rem}
-.confirm-box .confirm-sub{font-size:.85rem;color:var(--slate);margin-bottom:1.2rem}
-.confirm-box .confirm-btns{display:flex;gap:.6rem;justify-content:center}
 
 /* responsive */
 @media(max-width:700px){
@@ -275,6 +262,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   .tt-grid{grid-template-columns:60px repeat(3,1fr)}
   .stat-row{grid-template-columns:1fr 1fr}
   .hamburger{display:flex!important}
+  #dashGrid{grid-template-columns:1fr}
 }
 .hamburger{
   display:none;align-items:center;justify-content:center;
@@ -288,14 +276,10 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
 .empty{text-align:center;padding:3rem 1rem;color:var(--slate)}
 .empty-icon{font-size:2.5rem;margin-bottom:.8rem}
 .empty p{font-size:.9rem}
-
-/* action buttons */
-.action-btns{display:flex;gap:4px}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">જ્ઞાન <span>જ્યોત</span></div>
@@ -307,12 +291,9 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- OVERLAY (mobile) -->
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- APP -->
 <div id="app">
-  <!-- SIDEBAR -->
   <div class="sidebar" id="sidebar">
     <div class="sb-logo">જ્ઞાન <span>જ્યોત</span></div>
     <nav class="sb-nav">
@@ -331,7 +312,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
       <div style="display:flex;align-items:center">
@@ -344,10 +324,9 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       <div id="topbarActions"></div>
     </div>
 
-    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stat-row" id="dashStats"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem" id="dashGrid">
+      <div id="dashGrid">
         <div class="card">
           <div class="card-header"><span class="card-title">તાજેતરના વિદ્યાર્થીઓ</span></div>
           <table class="tbl" id="dashStudentTbl"><tbody></tbody></table>
@@ -363,7 +342,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       </div>
     </div>
 
-    <!-- STUDENTS -->
     <div class="page" id="page-students">
       <div class="search-bar">
         <input type="text" id="stuSearch" placeholder="🔍 નામ / ધોરણ શોધો..." oninput="renderStudents()">
@@ -383,7 +361,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       </div>
     </div>
 
-    <!-- FEES -->
     <div class="page" id="page-fees">
       <div class="search-bar">
         <input type="text" id="feeSearch" placeholder="🔍 નામ શોધો..." oninput="renderFees()">
@@ -393,7 +370,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
           <option value="pending">બાકી</option>
           <option value="partial">આંશિક</option>
         </select>
-        <button class="btn btn-sm" onclick="openAddFee()">+ ફી ઉમેરો</button>
+        <button class="btn btn-sm" onclick="openAddFee()">+ી ઉમેરો</button>
       </div>
       <div class="card">
         <table class="tbl">
@@ -403,7 +380,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       </div>
     </div>
 
-    <!-- ATTENDANCE -->
     <div class="page" id="page-attendance">
       <div class="search-bar">
         <input type="date" id="attDate" onchange="renderAttendance()">
@@ -429,7 +405,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       </div>
     </div>
 
-    <!-- MARKS -->
     <div class="page" id="page-marks">
       <div class="search-bar">
         <button class="btn btn-sm" onclick="openModal('markModal')">+ ટેસ્ટ ઉમેરો</button>
@@ -440,7 +415,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       <div id="marksList"></div>
     </div>
 
-    <!-- HOMEWORK -->
     <div class="page" id="page-homework">
       <div style="margin-bottom:1rem">
         <button class="btn btn-sm" onclick="openModal('hwModal')">+ Homework ઉમેરો</button>
@@ -448,7 +422,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       <div id="hwList"></div>
     </div>
 
-    <!-- TIMETABLE -->
     <div class="page" id="page-timetable">
       <div style="margin-bottom:1rem;display:flex;gap:.6rem;align-items:center">
         <select id="ttBatch" onchange="renderTimetable()">
@@ -461,7 +434,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
       </div>
     </div>
 
-    <!-- NOTICES -->
     <div class="page" id="page-notices">
       <div style="margin-bottom:1rem">
         <button class="btn btn-sm" onclick="openModal('noticeModal')">+ Notice ઉમેરો</button>
@@ -471,9 +443,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- ── MODALS ── -->
-
-<!-- Student Modal -->
 <div class="modal-bg" id="stuModal">
   <div class="modal">
     <div class="modal-head"><span id="stuModalTitle">નવો વિદ્યાર્થી</span><button class="modal-close" onclick="closeModal('stuModal')">✕</button></div>
@@ -512,7 +481,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Fee Modal -->
 <div class="modal-bg" id="feeModal">
   <div class="modal">
     <div class="modal-head"><span>ફી એન્ટ્રી</span><button class="modal-close" onclick="closeModal('feeModal')">✕</button></div>
@@ -546,7 +514,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Marks Modal -->
 <div class="modal-bg" id="markModal">
   <div class="modal">
     <div class="modal-head"><span>ટેસ્ટ ઉમેરો</span><button class="modal-close" onclick="closeModal('markModal')">✕</button></div>
@@ -567,7 +534,7 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
           </select>
         </div>
         <div class="field"><label>કુલ માર્ક્સ</label><input id="markTotal" type="number" value="100"></div>
-        <div class="field full"><label>તારીખ</label><input id="markDate" type="date"></div>
+        <div class="field"><label>તારીખ</label><input id="markDate" type="date"></div>
       </div>
     </div>
     <div class="modal-foot">
@@ -577,7 +544,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Homework Modal -->
 <div class="modal-bg" id="hwModal">
   <div class="modal">
     <div class="modal-head"><span>Homework ઉમેરો</span><button class="modal-close" onclick="closeModal('hwModal')">✕</button></div>
@@ -608,12 +574,10 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Notice Modal -->
 <div class="modal-bg" id="noticeModal">
   <div class="modal">
     <div class="modal-head"><span>Notice ઉમેરો</span><button class="modal-close" onclick="closeModal('noticeModal')">✕</button></div>
     <div class="modal-body">
-      <input type="hidden" id="noticeEditId">
       <div class="form-grid full">
         <div class="field"><label>શીર્ષક *</label><input id="noticeTitle" placeholder="Notice શીર્ષક"></div>
         <div class="field"><label>પ્રકાર</label>
@@ -631,7 +595,6 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Timetable Cell Modal -->
 <div class="modal-bg" id="ttModal">
   <div class="modal" style="max-width:320px">
     <div class="modal-head"><span id="ttModalTitle">Class ઉમેરો</span><button class="modal-close" onclick="closeModal('ttModal')">✕</button></div>
@@ -652,28 +615,12 @@ body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--
   </div>
 </div>
 
-<!-- Confirm Modal -->
-<div class="modal-bg" id="confirmModal">
-  <div class="modal" style="max-width:360px">
-    <div class="confirm-box">
-      <div class="confirm-icon" id="confirmIcon">⚠️</div>
-      <div class="confirm-msg" id="confirmMsg">શું ચોક્કસ છે?</div>
-      <div class="confirm-sub" id="confirmSub">આ ક્રિયા પાછી પાળી શકાશે નહીં.</div>
-      <div class="confirm-btns">
-        <button class="btn btn-outline btn-sm" onclick="closeModal('confirmModal')">રદ કરો</button>
-        <button class="btn btn-sm btn-red" id="confirmYes" onclick="">હા, Delete કરો</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ── DATA ──
-var PASS = {admin:'1234'};
-var DB = JSON.parse(localStorage.getItem('tuition_db')||'{}');
+const PASS = {admin:'1234'};
+let DB = JSON.parse(localStorage.getItem('tuition_db')||'{}');
 if(!DB.students) DB.students=[];
 if(!DB.fees) DB.fees=[];
 if(!DB.attendance) DB.attendance={};
@@ -682,14 +629,15 @@ if(!DB.homework) DB.homework=[];
 if(!DB.timetable) DB.timetable={};
 if(!DB.notices) DB.notices=[];
 
-// Seed sample data if empty
+// seed sample data if empty
 if(!DB.students.length){
-  DB.students=[
+  const sampleStudents=[
     {id:1,name:'ભૂમિ પટેલ',std:'ધો. 10',board:'GSEB',batch:'B Batch',mobile:'9876543210',fee:900,join:'2024-06-01',status:'active',notes:'GSEB Gujarati medium'},
     {id:2,name:'રોહન શાહ',std:'ધો. 8',board:'CBSE',batch:'A Batch',mobile:'9876543211',fee:750,join:'2024-06-05',status:'active',notes:''},
     {id:3,name:'દીપા મહેતા',std:'ધો. 12',board:'GSEB',batch:'C Batch',mobile:'9876543212',fee:1200,join:'2024-06-03',status:'active',notes:'Science stream'},
     {id:4,name:'આર્યન જોષી',std:'ધો. 7',board:'CBSE',batch:'A Batch',mobile:'9876543213',fee:600,join:'2024-07-01',status:'active',notes:''},
   ];
+  DB.students=sampleStudents;
   DB.fees=[
     {id:1,studentId:1,month:'જૂન',total:900,paid:900,date:'2024-06-05',mode:'UPI',note:''},
     {id:2,studentId:2,month:'જૂન',total:750,paid:500,date:'2024-06-10',mode:'Cash',note:'250 બાકી'},
@@ -706,24 +654,10 @@ if(!DB.students.length){
 function saveDB(){localStorage.setItem('tuition_db',JSON.stringify(DB))}
 function uid(){return Date.now()+''+Math.random().toString(36).slice(2,6)}
 
-// ── CUSTOM CONFIRM ──
-var confirmCallback = null;
-function showConfirm(msg, sub, cb){
-  document.getElementById('confirmMsg').textContent = msg;
-  document.getElementById('confirmSub').textContent = sub || 'આ ક્રિયા પાછી પાળી શકાશે નહીં.';
-  confirmCallback = cb;
-  document.getElementById('confirmYes').onclick = function(){
-    closeModal('confirmModal');
-    if(confirmCallback) confirmCallback();
-    confirmCallback = null;
-  };
-  openModal('confirmModal');
-}
-
 // ── AUTH ──
 function doLogin(){
-  var u=document.getElementById('loginUser').value.trim();
-  var p=document.getElementById('loginPass').value;
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
   if(PASS[u]===p){
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('app').style.display='block';
@@ -732,7 +666,7 @@ function doLogin(){
     document.getElementById('loginErr').style.display='block';
   }
 }
-document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 function doLogout(){
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('app').style.display='none';
@@ -740,7 +674,7 @@ function doLogout(){
 
 // ── INIT ──
 function initApp(){
-  var today=new Date();
+  const today=new Date();
   document.getElementById('todayDate').textContent=today.toLocaleDateString('gu-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('attDate').value=today.toISOString().split('T')[0];
   document.getElementById('markDate').value=today.toISOString().split('T')[0];
@@ -751,12 +685,11 @@ function initApp(){
 
 // ── NAVIGATION ──
 function goPage(page){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-  document.querySelectorAll('.sb-item').forEach(function(i){i.classList.remove('active')});
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  var sbItem = document.querySelector('[data-page="'+page+'"]');
-  if(sbItem) sbItem.classList.add('active');
-  var titles={dashboard:'Dashboard',students:'વિદ્યાર્થીઓ',fees:'ફી ટ્રેકિંગ',attendance:'હાજરી',marks:'ટેસ્ટ માર્ક્સ',homework:'Homework',timetable:'Timetable',notices:'Notice Board'};
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  const titles={dashboard:'Dashboard',students:'વિદ્યાર્થીઓ',fees:'ફી ટ્રેકિંગ',attendance:'હાજરી',marks:'ટેસ્ટ માર્ક્સ',homework:'Homework',timetable:'Timetable',notices:'Notice Board'};
   document.getElementById('pageTitle').textContent=titles[page]||page;
   closeSidebar();
   if(page==='dashboard') renderDashboard();
@@ -784,104 +717,93 @@ function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 
 // ── TOAST ──
-function toast(msg,color){
-  color = color || '#0D1B2A';
-  var t=document.getElementById('toast');
+function toast(msg,color='#0D1B2A'){
+  const t=document.getElementById('toast');
   t.textContent=msg; t.style.background=color;
   t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},2500);
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
 // ── HELPERS ──
-function stuName(id){var s=DB.students.find(function(x){return x.id==id});return s?s.name:'?'}
-function stuStd(id){var s=DB.students.find(function(x){return x.id==id});return s?s.std:''}
+function stuName(id){const s=DB.students.find(x=>x.id==id);return s?s.name:'?'}
+function stuStd(id){const s=DB.students.find(x=>x.id==id);return s?s.std:''}
 function getGrade(mark,total){
-  var pct=mark/total*100;
+  const pct=mark/total*100;
   if(pct>=90)return{g:'A+',cls:'badge-purple'};
   if(pct>=75)return{g:'A',cls:'badge-green'};
   if(pct>=60)return{g:'B',cls:'badge-blue'};
   if(pct>=45)return{g:'C',cls:'badge-yellow'};
   return{g:'D',cls:'badge-red'};
 }
-function fmtDate(d){if(!d)return'—';var dt=new Date(d);return dt.toLocaleDateString('gu-IN')}
+function fmtDate(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('gu-IN')}
 
 // ── DASHBOARD ──
 function renderDashboard(){
-  var total=DB.students.filter(function(s){return s.status==='active'}).length;
-  var pending=DB.fees.filter(function(f){return f.paid<f.total}).length;
-  var collected=DB.fees.reduce(function(a,f){return a+Number(f.paid)},0);
-  var due=DB.fees.reduce(function(a,f){return a+(Number(f.total)-Number(f.paid))},0);
+  const total=DB.students.filter(s=>s.status==='active').length;
+  const pending=DB.fees.filter(f=>f.paid<f.total).length;
+  const collected=DB.fees.reduce((a,f)=>a+Number(f.paid),0);
+  const due=DB.fees.reduce((a,f)=>a+(Number(f.total)-Number(f.paid)),0);
 
-  document.getElementById('dashStats').innerHTML=
-    '<div class="stat-card"><div class="s-icon">👨‍🎓</div><div class="s-num">'+total+'</div><div class="s-label">સક્રિય વિદ્યાર્થીઓ</div></div>'+
-    '<div class="stat-card"><div class="s-icon">💰</div><div class="s-num">₹'+collected.toLocaleString()+'</div><div class="s-label">ફી વસૂલ</div></div>'+
-    '<div class="stat-card accent"><div class="s-icon">⚠️</div><div class="s-num">₹'+due.toLocaleString()+'</div><div class="s-label">ફી બાકી</div></div>'+
-    '<div class="stat-card"><div class="s-icon">📢</div><div class="s-num">'+DB.notices.length+'</div><div class="s-label">Notices</div></div>';
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-card"><div class="s-icon">👨‍🎓</div><div class="s-num">${total}</div><div class="s-label">સક્રિય વિદ્યાર્થીઓ</div></div>
+    <div class="stat-card"><div class="s-icon">💰</div><div class="s-num">₹${collected.toLocaleString()}</div><div class="s-label">ફી વસૂલ (આ મહિના)</div></div>
+    <div class="stat-card accent"><div class="s-icon">⚠️</div><div class="s-num">₹${due.toLocaleString()}</div><div class="s-label">ફી બાકી</div></div>
+    <div class="stat-card"><div class="s-icon">📢</div><div class="s-num">${DB.notices.length}</div><div class="s-label">Notices</div></div>
+  `;
 
-  var rb=document.querySelector('#dashStudentTbl tbody');
-  var recentStu = DB.students.slice(-5).reverse();
-  if(recentStu.length){
-    rb.innerHTML=recentStu.map(function(s){
-      return '<tr><td><b>'+s.name+'</b></td><td>'+s.std+'</td><td><span class="badge badge-blue">'+s.batch+'</span></td></tr>';
-    }).join('');
-  } else {
-    rb.innerHTML='<tr><td colspan="3" class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી નહીં</p></td></tr>';
-  }
+  // recent students
+  const rb=document.querySelector('#dashStudentTbl tbody');
+  rb.innerHTML=DB.students.slice(-5).reverse().map(s=>`
+    <tr><td><b>${s.name}</b></td><td>${s.std}</td><td><span class="badge badge-blue">${s.batch}</span></td></tr>
+  `).join('') || '<tr><td colspan="3" class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી નહીં</p></td></tr>';
 
-  var pf=DB.fees.filter(function(f){return f.paid<f.total});
-  if(pf.length){
-    document.querySelector('#dashFeesTbl tbody').innerHTML=pf.slice(0,5).map(function(f){
-      return '<tr><td><b>'+stuName(f.studentId)+'</b></td><td>'+f.month+'</td><td class="badge badge-red">₹'+(f.total-f.paid)+' બાકી</td></tr>';
-    }).join('');
-  } else {
-    document.querySelector('#dashFeesTbl tbody').innerHTML='<tr><td colspan="3" style="text-align:center;padding:1rem;color:var(--green)">✅ બધી ફી ભરાઈ ગઈ</td></tr>';
-  }
+  // pending fees
+  const pf=DB.fees.filter(f=>f.paid<f.total);
+  document.querySelector('#dashFeesTbl tbody').innerHTML=pf.slice(0,5).map(f=>`
+    <tr><td><b>${stuName(f.studentId)}</b></td><td>${f.month}</td><td class="badge badge-red">₹${f.total-f.paid} બાકી</td></tr>
+  `).join('') || '<tr><td colspan="3" style="text-align:center;padding:1rem;color:var(--green)">✅ બધી ફી ભરાઈ ગઈ</td></tr>';
 
-  var recentNotices = DB.notices.slice(-2).reverse();
-  if(recentNotices.length){
-    document.getElementById('dashNotices').innerHTML=recentNotices.map(function(n){
-      return '<div class="notice-card" style="margin-bottom:.6rem"><div class="notice-title">'+n.title+'</div><div class="notice-body">'+n.body+'</div></div>';
-    }).join('');
-  } else {
-    document.getElementById('dashNotices').innerHTML='<div style="color:var(--slate);font-size:.9rem">કોઈ Notice નહીં</div>';
-  }
+  // notices
+  document.getElementById('dashNotices').innerHTML=DB.notices.slice(0,2).map(n=>`
+    <div class="notice-card" style="margin-bottom:.6rem">
+      <div class="notice-title">${n.title}</div>
+      <div class="notice-body">${n.body}</div>
+    </div>
+  `).join('') || '<div style="color:var(--slate);font-size:.9rem">કોઈ Notice નહીં</div>';
 }
 
 // ── STUDENTS ──
 function renderStudents(){
-  var q=document.getElementById('stuSearch').value.toLowerCase();
-  var f=document.getElementById('stuFilter').value;
-  var list=DB.students.filter(function(s){
-    var match=s.name.toLowerCase().indexOf(q)>=0||s.std.indexOf(q)>=0;
-    var stdMatch=f?s.std===f:true;
+  const q=document.getElementById('stuSearch').value.toLowerCase();
+  const f=document.getElementById('stuFilter').value;
+  let list=DB.students.filter(s=>{
+    const match=s.name.toLowerCase().includes(q)||s.std.includes(q);
+    const stdMatch=f?s.std===f:true;
     return match&&stdMatch;
   });
-  var tbody=document.getElementById('stuTbody');
-  if(!list.length){
-    tbody.innerHTML='<tr><td colspan="8"><div class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી મળ્યા નહીં</p></div></td></tr>';
-    return;
-  }
-  tbody.innerHTML=list.map(function(s,i){
-    return '<tr>'+
-      '<td>'+(i+1)+'</td>'+
-      '<td><b>'+s.name+'</b></td>'+
-      '<td>'+s.std+'</td>'+
-      '<td><span class="badge badge-blue">'+s.board+'</span></td>'+
-      '<td>'+s.mobile+'</td>'+
-      '<td>'+s.batch+'</td>'+
-      '<td><span class="badge '+(s.status==='active'?'badge-green':'badge-red')+'">'+(s.status==='active'?'Active':'Inactive')+'</span></td>'+
-      '<td><div class="action-btns">'+
-        '<button class="btn btn-sm btn-outline" onclick="editStudent('+s.id+')">✏️</button>'+
-        '<button class="btn btn-sm btn-red" onclick="deleteStudent('+s.id+')">🗑</button>'+
-      '</div></td>'+
-    '</tr>';
-  }).join('');
+  const tbody=document.getElementById('stuTbody');
+  if(!list.length){tbody.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી મળ્યા નહીં</p></div></td></tr>`;return;}
+  tbody.innerHTML=list.map((s,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><b>${s.name}</b></td>
+      <td>${s.std}</td>
+      <td><span class="badge badge-blue">${s.board}</span></td>
+      <td>${s.mobile}</td>
+      <td>${s.batch}</td>
+      <td><span class="badge ${s.status==='active'?'badge-green':'badge-red'}">${s.status==='active'?'Active':'Inactive'}</span></td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-sm btn-outline" onclick="editStudent(${s.id})">✏️</button>
+        <button class="btn btn-sm btn-red" onclick="deleteStudent(${s.id})">🗑</button>
+      </td>
+    </tr>
+  `).join('');
 }
 
 function openAddStudent(){
   document.getElementById('stuId').value='';
   document.getElementById('stuModalTitle').textContent='નવો વિદ્યાર્થી';
-  ['stuName','stuMobile','stuFee','stuNotes'].forEach(function(id){document.getElementById(id).value=''});
+  ['stuName','stuMobile','stuFee','stuNotes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('stuStd').value='ધો. 5';
   document.getElementById('stuBoard').value='GSEB';
   document.getElementById('stuBatch').value='A Batch';
@@ -891,8 +813,7 @@ function openAddStudent(){
 }
 
 function editStudent(id){
-  var s=DB.students.find(function(x){return Number(x.id)===Number(id)});
-  if(!s)return;
+  const s=DB.students.find(x=>Number(x.id)===Number(id));if(!s)return;
   document.getElementById('stuId').value=s.id;
   document.getElementById('stuModalTitle').textContent='વિદ્યાર્થી સુધારો';
   document.getElementById('stuName').value=s.name;
@@ -908,86 +829,72 @@ function editStudent(id){
 }
 
 function saveStudent(){
-  var name=document.getElementById('stuName').value.trim();
-  var mobile=document.getElementById('stuMobile').value.trim();
+  const name=document.getElementById('stuName').value.trim();
+  const mobile=document.getElementById('stuMobile').value.trim();
   if(!name){toast('❌ નામ ભરો');return;}
-  if(!mobile||mobile.length<10){toast('❌ મોબાઈલ નંબર સાચો ભરો');return;}
-  var id=document.getElementById('stuId').value;
-  var obj={
+  const id=document.getElementById('stuId').value;
+  const obj={
     id:id?Number(id):Date.now(),
-    name:name,
-    std:document.getElementById('stuStd').value,
+    name,std:document.getElementById('stuStd').value,
     board:document.getElementById('stuBoard').value,
     batch:document.getElementById('stuBatch').value,
-    mobile:mobile,
-    fee:Number(document.getElementById('stuFee').value)||0,
+    mobile,fee:Number(document.getElementById('stuFee').value)||0,
     join:document.getElementById('stuJoin').value,
     status:document.getElementById('stuStatus').value,
     notes:document.getElementById('stuNotes').value
   };
-  if(id){
-    DB.students=DB.students.map(function(s){return s.id===obj.id?obj:s});
-  } else {
-    DB.students.push(obj);
-  }
+  if(id) DB.students=DB.students.map(s=>s.id===obj.id?obj:s);
+  else DB.students.push(obj);
   saveDB();closeModal('stuModal');renderStudents();
   toast('✅ વિદ્યાર્થી સેવ થયા');
 }
 
 function deleteStudent(id){
-  showConfirm(
-    'આ વિદ્યાર્થીને Delete કરવી છે?',
-    'આ વિદ્યાર્થીની બધી માહિતી કાઢી નાખાશે.',
-    function(){
-      id=Number(id);
-      DB.students=DB.students.filter(function(s){return Number(s.id)!==id});
-      saveDB();renderStudents();toast('🗑 વિદ્યાર્થી Delete થયા','#EF4444');
-    }
-  );
+  if(!confirm('આ વિદ્યાર્થીને delete કરો?'))return;
+  id=Number(id);
+  DB.students=DB.students.filter(s=>Number(s.id)!==id);
+  saveDB();renderStudents();toast('🗑 Delete થયા','#EF4444');
 }
 
 // ── FEES ──
 function populateFeeStudents(){
-  var sel=document.getElementById('feeStudent');
-  sel.innerHTML=DB.students.map(function(s){return '<option value="'+s.id+'">'+s.name+' ('+s.std+')</option>'}).join('');
+  const sel=document.getElementById('feeStudent');
+  sel.innerHTML=DB.students.map(s=>`<option value="${s.id}">${s.name} (${s.std})</option>`).join('');
 }
 
 function renderFees(){
-  var q=document.getElementById('feeSearch').value.toLowerCase();
-  var f=document.getElementById('feeFilter').value;
-  var list=DB.fees.filter(function(fee){
-    var n=stuName(fee.studentId).toLowerCase();
-    var match=n.indexOf(q)>=0;
-    var status=fee.paid>=fee.total?'paid':fee.paid>0?'partial':'pending';
-    var sf=f?status===f:true;
+  const q=document.getElementById('feeSearch').value.toLowerCase();
+  const f=document.getElementById('feeFilter').value;
+  let list=DB.fees.filter(fee=>{
+    const n=stuName(fee.studentId).toLowerCase();
+    const match=n.includes(q);
+    const status=fee.paid>=fee.total?'paid':fee.paid>0?'partial':'pending';
+    const sf=f?status===f:true;
     return match&&sf;
   });
-  var tbody=document.getElementById('feeTbody');
-  if(!list.length){
-    tbody.innerHTML='<tr><td colspan="8"><div class="empty"><div class="empty-icon">💰</div><p>કોઈ ફી નોંધ નહીં</p></div></td></tr>';
-    return;
-  }
-  var sc={paid:'badge-green',partial:'badge-yellow',pending:'badge-red'};
-  var sl={paid:'ભર્યેલ',partial:'આંશિક',pending:'બાકી'};
-  tbody.innerHTML=list.map(function(fee){
-    var bal=Number(fee.total)-Number(fee.paid);
-    var pct=fee.total>0?Math.round(fee.paid/fee.total*100):0;
-    var status=bal<=0?'paid':fee.paid>0?'partial':'pending';
-    return '<tr>'+
-      '<td><b>'+stuName(fee.studentId)+'</b></td>'+
-      '<td>'+stuStd(fee.studentId)+'</td>'+
-      '<td>'+fee.month+'</td>'+
-      '<td>₹'+fee.total+'</td>'+
-      '<td>₹'+fee.paid+'</td>'+
-      '<td style="color:'+(bal>0?'var(--red)':'var(--green)')+'">₹'+bal+'</td>'+
-      '<td><span class="badge '+sc[status]+'">'+sl[status]+'</span>'+
-        '<div class="fee-bar"><div class="fee-bar-fill" style="width:'+pct+'%"></div></div>'+
-      '</td>'+
-      '<td><div class="action-btns">'+
-        '<button class="btn btn-sm btn-outline" onclick="editFee('+fee.id+')">✏️</button>'+
-        '<button class="btn btn-sm btn-red" onclick="deleteFee('+fee.id+')">🗑</button>'+
-      '</div></td>'+
-    '</tr>';
+  const tbody=document.getElementById('feeTbody');
+  if(!list.length){tbody.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-icon">💰</div><p>કોઈ ફી નોંધ નહીં</p></div></td></tr>`;return;}
+  tbody.innerHTML=list.map(fee=>{
+    const bal=Number(fee.total)-Number(fee.paid);
+    const pct=fee.total>0?Math.round(fee.paid/fee.total*100):0;
+    const status=bal<=0?'paid':fee.paid>0?'partial':'pending';
+    const sc={paid:'badge-green',partial:'badge-yellow',pending:'badge-red'};
+    const sl={paid:'ભર્યેલ',partial:'આંશિક',pending:'બાકી'};
+    return `<tr>
+      <td><b>${stuName(fee.studentId)}</b></td>
+      <td>${stuStd(fee.studentId)}</td>
+      <td>${fee.month}</td>
+      <td>₹${fee.total}</td>
+      <td>₹${fee.paid}</td>
+      <td style="color:${bal>0?'var(--red)':'var(--green)'}">₹${bal}</td>
+      <td><span class="badge ${sc[status]}">${sl[status]}</span>
+        <div class="fee-bar"><div class="fee-bar-fill" style="width:${pct}%"></div></div>
+      </td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-sm btn-outline" onclick="editFee(${fee.id})">✏️</button>
+        <button class="btn btn-sm btn-red" onclick="deleteFee(${fee.id})">🗑</button>
+      </td>
+    </tr>`;
   }).join('');
 }
 
@@ -1002,11 +909,10 @@ function openAddFee(){
 }
 
 function editFee(id){
-  var f=DB.fees.find(function(x){return Number(x.id)===Number(id)});
-  if(!f)return;
+  const f=DB.fees.find(x=>Number(x.id)===Number(id));if(!f)return;
   populateFeeStudents();
   document.getElementById('feeId').value=f.id;
-  setTimeout(function(){
+  setTimeout(()=>{
     document.getElementById('feeStudent').value=f.studentId;
     document.getElementById('feeMonth').value=f.month;
     document.getElementById('feeTotal').value=f.total;
@@ -1019,11 +925,11 @@ function editFee(id){
 }
 
 function saveFee(){
-  var studentId=document.getElementById('feeStudent').value;
-  var total=document.getElementById('feeTotal').value;
+  const studentId=document.getElementById('feeStudent').value;
+  const total=document.getElementById('feeTotal').value;
   if(!studentId||!total){toast('❌ વિદ્યાર્થી અને ફી ભરો');return;}
-  var id=document.getElementById('feeId').value;
-  var obj={
+  const id=document.getElementById('feeId').value;
+  const obj={
     id:id?Number(id):Date.now(),
     studentId:Number(studentId),
     month:document.getElementById('feeMonth').value,
@@ -1033,202 +939,180 @@ function saveFee(){
     mode:document.getElementById('feeMode').value,
     note:document.getElementById('feeNote').value
   };
-  if(id){
-    DB.fees=DB.fees.map(function(f){return f.id===obj.id?obj:f});
-  } else {
-    DB.fees.push(obj);
-  }
+  if(id) DB.fees=DB.fees.map(f=>f.id===obj.id?obj:f);
+  else DB.fees.push(obj);
+  document.getElementById('feeId').value='';
   saveDB();closeModal('feeModal');renderFees();
   toast('✅ ફી સેવ થઈ');
 }
 
 function deleteFee(id){
-  showConfirm(
-    'આ ફી નોંધ Delete કરવી છે?',
-    'આ ફી એન્ટ્રી પાછી મેળવાશે નહીં.',
-    function(){
-      id=Number(id);
-      DB.fees=DB.fees.filter(function(f){return Number(f.id)!==id});
-      saveDB();renderFees();toast('🗑 ફી Delete','#EF4444');
-    }
-  );
+  if(!confirm('Delete?'))return;
+  id=Number(id);
+  DB.fees=DB.fees.filter(f=>Number(f.id)!==id);
+  saveDB();renderFees();toast('🗑 Delete','#EF4444');
 }
 
 // ── ATTENDANCE ──
-var attState={};
+let attState={};
 function renderAttendance(){
-  var date=document.getElementById('attDate').value;
-  var batch=document.getElementById('attBatch').value;
-  var students=DB.students.filter(function(s){return s.status==='active'});
-  if(batch) students=students.filter(function(s){return s.batch===batch});
+  const date=document.getElementById('attDate').value;
+  const batch=document.getElementById('attBatch').value;
+  let students=DB.students.filter(s=>s.status==='active');
+  if(batch) students=students.filter(s=>s.batch===batch);
 
+  // load saved
   attState=DB.attendance[date]||{};
 
-  var grid=document.getElementById('attGrid');
-  if(!students.length){
-    grid.innerHTML='<div class="empty"><div class="empty-icon">👨‍🎓</div><p>આ Batch માં વિદ્યાર્થી નહીં</p></div>';
-    return;
-  }
+  const grid=document.getElementById('attGrid');
+  if(!students.length){grid.innerHTML='<div class="empty"><div class="empty-icon">👨‍🎓</div><p>આ Batch માં વિદ્યાર્થી નહીં</p></div>';return;}
 
-  grid.innerHTML='<div class="att-grid">'+students.map(function(s){
-    var st=attState[s.id]||'';
-    var cls=st==='P'?'present':st==='A'?'absent':st==='L'?'late':'';
-    var lbl=st==='P'?'✅ હાજર':st==='A'?'❌ ગેરહાજર':st==='L'?'⏰ મોડા':'— ચિહ્નિત નહીં';
-    return '<div class="att-item '+cls+'" id="att_'+s.id+'" onclick="cycleAtt('+s.id+')">'+
-      '<div class="att-name">'+s.name+'</div>'+
-      '<div class="att-status">'+lbl+'</div>'+
-    '</div>';
-  }).join('')+'</div>';
+  grid.innerHTML=`<div class="att-grid">${students.map(s=>{
+    const st=attState[s.id]||'';
+    const cls=st==='P'?'present':st==='A'?'absent':st==='L'?'late':'';
+    const lbl=st==='P'?'✅ હાજર':st==='A'?'❌ ગેરહાજર':st==='L'?'⏰ મોડા':'— ચિહ્નિત નહીં';
+    return `<div class="att-item ${cls}" id="att_${s.id}" onclick="cycleAtt(${s.id})">
+      <div class="att-name">${s.name}</div>
+      <div class="att-status">${lbl}</div>
+    </div>`;
+  }).join('')}</div>`;
   updateAttSummary(students);
   renderAttSummaryTable();
 }
 
 function cycleAtt(id){
-  var cur=attState[id]||'';
+  const cur=attState[id]||'';
   attState[id]=cur===''?'P':cur==='P'?'A':cur==='A'?'L':'';
-  var el=document.getElementById('att_'+id);
-  var st=attState[id];
+  const el=document.getElementById('att_'+id);
+  const st=attState[id];
   el.className='att-item '+(st==='P'?'present':st==='A'?'absent':st==='L'?'late':'');
   el.querySelector('.att-status').textContent=st==='P'?'✅ હાજર':st==='A'?'❌ ગેરહાજર':st==='L'?'⏰ મોડા':'— ચિહ્નિત નહીં';
-  updateAttSummary(DB.students.filter(function(s){return s.status==='active'}));
+  updateAttSummary(DB.students.filter(s=>s.status==='active'));
 }
 
 function updateAttSummary(students){
-  var p=students.filter(function(s){return attState[s.id]==='P'}).length;
-  var a=students.filter(function(s){return attState[s.id]==='A'}).length;
-  document.getElementById('attSummary').textContent='હાજર: '+p+' | ગેરહાજર: '+a+' | કુલ: '+students.length;
+  const p=students.filter(s=>attState[s.id]==='P').length;
+  const a=students.filter(s=>attState[s.id]==='A').length;
+  document.getElementById('attSummary').textContent=`હાજર: ${p} | ગેરહાજર: ${a} | કુલ: ${students.length}`;
 }
 
 function saveAttendance(){
-  var date=document.getElementById('attDate').value;
-  DB.attendance[date]=JSON.parse(JSON.stringify(attState));
+  const date=document.getElementById('attDate').value;
+  DB.attendance[date]=attState;
   saveDB();toast('✅ હાજરી સેવ થઈ');
   renderAttSummaryTable();
 }
 
 function renderAttSummaryTable(){
-  var students=DB.students.filter(function(s){return s.status==='active'});
-  var tbody=document.getElementById('attSummaryTbl');
-  tbody.innerHTML=students.map(function(s){
-    var present=0,absent=0,total=0;
-    Object.keys(DB.attendance).forEach(function(day){
-      var d=DB.attendance[day];
-      if(d[s.id]!==undefined){total++;if(d[s.id]==='P')present++;else if(d[s.id]==='A')absent++;}
+  const students=DB.students.filter(s=>s.status==='active');
+  const tbody=document.getElementById('attSummaryTbl');
+  tbody.innerHTML=students.map(s=>{
+    let present=0,absent=0,total=0;
+    Object.values(DB.attendance).forEach(day=>{
+      if(day[s.id]!==undefined){total++;if(day[s.id]==='P')present++;else if(day[s.id]==='A')absent++;}
     });
-    var pct=total>0?Math.round(present/total*100):0;
-    return '<tr><td><b>'+s.name+'</b></td><td>'+total+'</td>'+
-      '<td><span class="badge badge-green">'+present+'</span></td>'+
-      '<td><span class="badge badge-red">'+absent+'</span></td>'+
-      '<td><span class="badge '+(pct>=75?'badge-green':'badge-red')+'">'+pct+'%</span></td></tr>';
+    const pct=total>0?Math.round(present/total*100):0;
+    return `<tr><td><b>${s.name}</b></td><td>${total}</td>
+      <td><span class="badge badge-green">${present}</span></td>
+      <td><span class="badge badge-red">${absent}</span></td>
+      <td><span class="badge ${pct>=75?'badge-green':'badge-red'}">${pct}%</span></td>
+    </tr>`;
   }).join('');
 }
 
 // ── MARKS ──
 function renderMarks(){
-  var f=document.getElementById('markFilter').value;
-  var sel=document.getElementById('markFilter');
-  var cur=sel.value;
-  sel.innerHTML='<option value="">બધા ટેસ્ટ</option>'+DB.tests.map(function(t){return '<option value="'+t.id+'">'+t.name+' ('+t.subject+')</option>'}).join('');
+  const f=document.getElementById('markFilter').value;
+  // populate filter
+  const sel=document.getElementById('markFilter');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">બધા ટેસ્ટ</option>'+DB.tests.map(t=>`<option value="${t.id}">${t.name} (${t.subject})</option>`).join('');
   if(cur) sel.value=cur;
 
-  var tests=DB.tests;
-  if(f) tests=tests.filter(function(t){return t.id==f});
+  let tests=DB.tests;
+  if(f) tests=tests.filter(t=>t.id==f);
 
-  var container=document.getElementById('marksList');
-  if(!tests.length){
-    container.innerHTML='<div class="empty"><div class="empty-icon">📝</div><p>કોઈ ટેસ્ટ નહીં — ઉપર "+ ટેસ્ટ ઉમેરો" ક્લિક કરો</p></div>';
-    return;
-  }
+  const container=document.getElementById('marksList');
+  if(!tests.length){container.innerHTML=`<div class="empty"><div class="empty-icon">📝</div><p>કોઈ ટેસ્ટ નહીં — ઉપર "+ ટેસ્ટ ઉમેરો" ક્લિક કરો</p></div>`;return;}
 
-  container.innerHTML=tests.map(function(test){
-    var students=DB.students.filter(function(s){return s.std===test.std&&s.status==='active'});
-    return '<div class="card" style="margin-bottom:1rem">'+
-      '<div class="card-header">'+
-        '<span class="card-title">📝 '+test.name+' — '+test.subject+' ('+test.std+') | કુલ: '+test.totalMarks+'</span>'+
-        '<div style="display:flex;gap:.4rem">'+
-          '<span style="font-size:.8rem;color:var(--slate)">'+fmtDate(test.date)+'</span>'+
-          '<button class="btn btn-sm btn-red" onclick="deleteTest('+test.id+')">🗑</button>'+
-        '</div>'+
-      '</div>'+
-      '<div style="padding:1rem">'+
-        students.map(function(s){
-          var mark=(test.marks&&test.marks[s.id]!==undefined)?test.marks[s.id]:'';
-          var g=mark!==''?getGrade(mark,test.totalMarks):{g:'—',cls:'badge-yellow'};
-          return '<div class="marks-row">'+
-            '<span class="std-name">'+s.name+'</span>'+
-            '<input type="number" value="'+mark+'" min="0" max="'+test.totalMarks+'" placeholder="—" onchange="updateMark('+test.id+','+s.id+',this.value)" style="width:70px">'+
-            '<span>/ '+test.totalMarks+'</span>'+
-            '<span class="badge '+g.cls+' grade-badge">'+g.g+'</span>'+
-          '</div>';
-        }).join('')+
-        (!students.length?'<div style="color:var(--slate);font-size:.85rem">આ ધોરણ ('+test.std+') ના Active વિદ્યાર્થી નહીં</div>':'')+
-      '</div>'+
-    '</div>';
+  container.innerHTML=tests.map(test=>{
+    const students=DB.students.filter(s=>s.std===test.std&&s.status==='active');
+    return `<div class="card" style="margin-bottom:1rem">
+      <div class="card-header">
+        <span class="card-title">📝 ${test.name} — ${test.subject} (${test.std}) | કુલ: ${test.totalMarks}</span>
+        <div style="display:flex;gap:.4rem">
+          <span style="font-size:.8rem;color:var(--slate)">${fmtDate(test.date)}</span>
+          <button class="btn btn-sm btn-red" onclick="deleteTest(${test.id})">🗑</button>
+        </div>
+      </div>
+      <div style="padding:1rem">
+        ${students.map(s=>{
+          const mark=test.marks&&test.marks[s.id]!==undefined?test.marks[s.id]:'';
+          const g=mark!==''?getGrade(mark,test.totalMarks):{g:'—',cls:'badge-yellow'};
+          return `<div class="marks-row">
+            <span class="std-name">${s.name}</span>
+            <input type="number" value="${mark}" min="0" max="${test.totalMarks}" placeholder="—"
+              onchange="updateMark(${test.id},${s.id},this.value)" style="width:70px">
+            <span>/ ${test.totalMarks}</span>
+            <span class="badge ${g.cls} grade-badge">${g.g}</span>
+          </div>`;
+        }).join('')}
+        ${!students.length?'<div style="color:var(--slate);font-size:.85rem">આ ધોરણ ('+test.std+') ના Active વિદ્યાર્થી નહીં</div>':''}
+      </div>
+    </div>`;
   }).join('');
 }
 
 function saveTest(){
-  var name=document.getElementById('markName').value.trim();
+  const name=document.getElementById('markName').value.trim();
   if(!name){toast('❌ ટેસ્ટ નામ ભરો');return;}
   DB.tests.push({
-    id:Date.now(),
-    name:name,
+    id:Date.now(),name,
     subject:document.getElementById('markSubject').value,
     std:document.getElementById('markStd').value,
     totalMarks:Number(document.getElementById('markTotal').value)||100,
     date:document.getElementById('markDate').value,
     marks:{}
   });
-  document.getElementById('markName').value='';
   saveDB();closeModal('markModal');renderMarks();
   toast('✅ ટેસ્ટ ઉમેરાયો');
 }
 
 function updateMark(testId,stuId,val){
-  var t=DB.tests.find(function(x){return x.id===testId});
+  const t=DB.tests.find(x=>x.id===testId);
   if(!t)return;
   if(!t.marks)t.marks={};
   t.marks[stuId]=Number(val);
   saveDB();
-  // Re-render to update grades
-  renderMarks();
 }
 
 function deleteTest(id){
-  showConfirm(
-    'આ ટેસ્ટ Delete કરવો છે?',
-    'બધા વિદ્યાર્થીઓના માર્ક્સ પણ કાઢી નાખાશે.',
-    function(){
-      id=Number(id);
-      DB.tests=DB.tests.filter(function(t){return Number(t.id)!==id});
-      saveDB();renderMarks();toast('🗑 ટેસ્ટ Delete','#EF4444');
-    }
-  );
+  if(!confirm('Delete?'))return;
+  id=Number(id);
+  DB.tests=DB.tests.filter(t=>Number(t.id)!==id);
+  saveDB();renderMarks();toast('🗑 Delete','#EF4444');
 }
 
 // ── HOMEWORK ──
 function renderHomework(){
-  var list=document.getElementById('hwList');
-  if(!DB.homework.length){
-    list.innerHTML='<div class="empty"><div class="empty-icon">📚</div><p>કોઈ Homework નહીં</p></div>';
-    return;
-  }
-  list.innerHTML=DB.homework.slice().reverse().map(function(h){
-    return '<div class="notice-card">'+
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
-        '<div>'+
-          '<div class="notice-title">📚 '+h.subject+' — '+h.std+'</div>'+
-          '<div class="notice-meta">આપ્યા: '+fmtDate(h.given)+' | જમા: '+fmtDate(h.due)+'</div>'+
-          '<div class="notice-body">'+h.desc+'</div>'+
-        '</div>'+
-        '<button class="btn btn-sm btn-red" onclick="deleteHW('+h.id+')">🗑</button>'+
-      '</div>'+
-    '</div>';
-  }).join('');
+  const list=document.getElementById('hwList');
+  if(!DB.homework.length){list.innerHTML=`<div class="empty"><div class="empty-icon">📚</div><p>કોઈ Homework નહીં</p></div>`;return;}
+  list.innerHTML=[...DB.homework].reverse().map(h=>`
+    <div class="notice-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="notice-title">📚 ${h.subject} — ${h.std}</div>
+          <div class="notice-meta">આપ્યા: ${fmtDate(h.given)} | જમા: ${fmtDate(h.due)}</div>
+          <div class="notice-body">${h.desc}</div>
+        </div>
+        <button class="btn btn-sm btn-red" onclick="deleteHW(${h.id})">🗑</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 function saveHomework(){
-  var desc=document.getElementById('hwDesc').value.trim();
+  const desc=document.getElementById('hwDesc').value.trim();
   if(!desc){toast('❌ વિગત ભરો');return;}
   DB.homework.push({
     id:Date.now(),
@@ -1236,166 +1120,109 @@ function saveHomework(){
     std:document.getElementById('hwStd').value,
     given:document.getElementById('hwGiven').value,
     due:document.getElementById('hwDue').value,
-    desc:desc
+    desc
   });
-  document.getElementById('hwDesc').value='';
   saveDB();closeModal('hwModal');renderHomework();
+  document.getElementById('hwDesc').value='';
   toast('✅ Homework ઉમેરાઈ');
 }
 
 function deleteHW(id){
-  showConfirm(
-    'Homework Delete કરવી છે?',
-    '',
-    function(){
-      id=Number(id);
-      DB.homework=DB.homework.filter(function(h){return Number(h.id)!==id});
-      saveDB();renderHomework();toast('🗑 Homework Delete','#EF4444');
-    }
-  );
+  id=Number(id);
+  DB.homework=DB.homework.filter(h=>Number(h.id)!==id);
+  saveDB();renderHomework();toast('🗑 Delete','#EF4444');
 }
 
 // ── TIMETABLE ──
-var DAYS=['સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
-var TIMES=['7:00–8:00','8:00–9:00','9:00–10:00','4:00–5:00','5:00–6:00','6:00–7:00'];
+const DAYS=['સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
+const TIMES=['7:00–8:00','8:00–9:00','9:00–10:00','4:00–5:00','5:00–6:00','6:00–7:00'];
 
 function renderTimetable(){
-  var batch=document.getElementById('ttBatch').value;
-  var grid=document.getElementById('ttGrid');
-  var tt=DB.timetable[batch]||{};
-
-  var html='<div class="tt-head"></div>';
-  DAYS.forEach(function(d){html+='<div class="tt-head">'+d+'</div>'});
-
-  TIMES.forEach(function(t){
-    html+='<div class="tt-time">'+t+'</div>';
-    DAYS.forEach(function(d){
-      var key=t+'_'+d;
-      var val=tt[key]||'';
-      var cls=val?'tt-cell filled':'tt-cell';
-      html+='<div class="'+cls+'" onclick="openTTCell(\''+key+'\',\''+val+'\')">'+(val||'—')+'</div>';
+  const batch=document.getElementById('ttBatch').value;
+  const grid=document.getElementById('ttGrid');
+  const tt=DB.timetable[batch]||{};
+  let html='<div class="tt-head"></div>'+DAYS.map(d=>`<div class="tt-head">${d}</div>`).join('');
+  TIMES.forEach(t=>{
+    html+=`<div class="tt-time">${t}</div>`;
+    DAYS.forEach(d=>{
+      const key=`${batch}_${d}_${t}`;
+      const val=tt[`${d}_${t}`]||'';
+      html+=`<div class="tt-cell ${val?'filled':''}" onclick="openTTCell('${d}','${t}')">${val||'+'}</div>`;
     });
   });
-
   grid.innerHTML=html;
 }
 
-function openTTCell(key, val){
+function openTTCell(day,time){
+  const batch=document.getElementById('ttBatch').value;
+  const key=`${day}_${time}`;
   document.getElementById('ttKey').value=key;
-  document.getElementById('ttSubject').value=val||'';
-  document.getElementById('ttModalTitle').textContent='Class ઉમેરો ('+key.split('_')[1]+')';
+  document.getElementById('ttModalTitle').textContent=`${day} — ${time}`;
+  const val=(DB.timetable[batch]||{})[key]||'';
+  document.getElementById('ttSubject').value=val;
   openModal('ttModal');
 }
 
 function saveTTCell(){
-  var key=document.getElementById('ttKey').value;
-  var val=document.getElementById('ttSubject').value;
-  var batch=document.getElementById('ttBatch').value;
-  if(!DB.timetable[batch]) DB.timetable[batch]={};
-  if(val) DB.timetable[batch][key]=val;
+  const batch=document.getElementById('ttBatch').value;
+  const key=document.getElementById('ttKey').value;
+  const sub=document.getElementById('ttSubject').value;
+  if(!DB.timetable[batch])DB.timetable[batch]={};
+  if(sub) DB.timetable[batch][key]=sub;
   else delete DB.timetable[batch][key];
-  saveDB();closeModal('ttModal');renderTimetable();
-  toast('✅ Timetable સેવ થઈ');
+  saveDB();closeModal('ttModal');renderTimetable();toast('✅ Timetable update');
 }
 
 function clearTimetable(){
-  showConfirm(
-    'આ Batch નો ટાઈમટેબલ ખાલી કરવો છે?',
-    'બધા સ્લોટ કાઢી નાખાશે.',
-    function(){
-      var batch=document.getElementById('ttBatch').value;
-      DB.timetable[batch]={};
-      saveDB();renderTimetable();toast('🗑 Timetable ખાલી','#EF4444');
-    }
-  );
+  if(!confirm('આ Batch નું Timetable ખાલી કરો?'))return;
+  const batch=document.getElementById('ttBatch').value;
+  DB.timetable[batch]={};
+  saveDB();renderTimetable();toast('🗑 Cleared');
 }
 
 // ── NOTICES ──
+const noticeColors={સામાન્ય:'badge-blue',પરીક્ષા:'badge-red',રજા:'badge-yellow',ઈવેન્ટ:'badge-green',ફી:'badge-purple'};
+
 function renderNotices(){
-  var list=document.getElementById('noticeList');
-  if(!DB.notices.length){
-    list.innerHTML='<div class="empty"><div class="empty-icon">📢</div><p>કોઈ Notice નહીં</p></div>';
-    return;
-  }
-  var typeColors={'સામાન્ય':'badge-blue','પરીક્ષા':'badge-red','રજા':'badge-green','ઈવેન્ટ':'badge-purple','ફી':'badge-yellow'};
-  list.innerHTML=DB.notices.slice().reverse().map(function(n){
-    var tc=typeColors[n.type]||'badge-blue';
-    return '<div class="notice-card">'+
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
-        '<div style="flex:1">'+
-          '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem">'+
-            '<span class="badge '+tc+'">'+n.type+'</span>'+
-            '<span class="notice-title">'+n.title+'</span>'+
-          '</div>'+
-          '<div class="notice-meta">'+fmtDate(n.date)+'</div>'+
-          '<div class="notice-body">'+n.body+'</div>'+
-        '</div>'+
-        '<div class="action-btns">'+
-          '<button class="btn btn-sm btn-outline" onclick="editNotice('+n.id+')">✏️</button>'+
-          '<button class="btn btn-sm btn-red" onclick="deleteNotice('+n.id+')">🗑</button>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
-  }).join('');
+  const list=document.getElementById('noticeList');
+  if(!DB.notices.length){list.innerHTML=`<div class="empty"><div class="empty-icon">📢</div><p>કોઈ Notice નહીં</p></div>`;return;}
+  list.innerHTML=[...DB.notices].reverse().map(n=>`
+    <div class="notice-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem">
+            <span class="badge ${noticeColors[n.type]||'badge-blue'}">${n.type}</span>
+            <div class="notice-title">${n.title}</div>
+          </div>
+          <div class="notice-meta">${fmtDate(n.date)}</div>
+          <div class="notice-body">${n.body}</div>
+        </div>
+        <button class="btn btn-sm btn-red" style="margin-left:.5rem" onclick="deleteNotice(${n.id})">🗑</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 function saveNotice(){
-  var title=document.getElementById('noticeTitle').value.trim();
-  var body=document.getElementById('noticeBody').value.trim();
+  const title=document.getElementById('noticeTitle').value.trim();
+  const body=document.getElementById('noticeBody').value.trim();
   if(!title||!body){toast('❌ શીર્ષક અને સંદેશ ભરો');return;}
-  var editId=document.getElementById('noticeEditId').value;
-  if(editId){
-    var eid=Number(editId);
-    DB.notices=DB.notices.map(function(n){return n.id===eid?{id:eid,title:title,type:document.getElementById('noticeType').value,body:body,date:new Date().toISOString().split('T')[0]}:n});
-  } else {
-    DB.notices.push({
-      id:Date.now(),
-      title:title,
-      type:document.getElementById('noticeType').value,
-      body:body,
-      date:new Date().toISOString().split('T')[0]
-    });
-  }
-  document.getElementById('noticeEditId').value='';
+  DB.notices.push({
+    id:Date.now(),title,
+    type:document.getElementById('noticeType').value,
+    body,date:new Date().toISOString().split('T')[0]
+  });
+  saveDB();closeModal('noticeModal');renderNotices();
   document.getElementById('noticeTitle').value='';
   document.getElementById('noticeBody').value='';
-  saveDB();closeModal('noticeModal');renderNotices();
-  toast('✅ Notice સેવ થઈ');
-}
-
-function editNotice(id){
-  var n=DB.notices.find(function(x){return Number(x.id)===Number(id)});
-  if(!n)return;
-  document.getElementById('noticeEditId').value=n.id;
-  document.getElementById('noticeTitle').value=n.title;
-  document.getElementById('noticeType').value=n.type;
-  document.getElementById('noticeBody').value=n.body;
-  openModal('noticeModal');
+  toast('✅ Notice પ્રકાશિત');
 }
 
 function deleteNotice(id){
-  showConfirm(
-    'Notice Delete કરવી છે?',
-    '',
-    function(){
-      id=Number(id);
-      DB.notices=DB.notices.filter(function(n){return Number(n.id)!==id});
-      saveDB();renderNotices();toast('🗑 Notice Delete','#EF4444');
-    }
-  );
+  id=Number(id);
+  DB.notices=DB.notices.filter(n=>Number(n.id)!==id);
+  saveDB();renderNotices();toast('🗑 Delete','#EF4444');
 }
-
-// ── RESPONSIVE DASHBOARD GRID ──
-function handleResize(){
-  var dg=document.getElementById('dashGrid');
-  if(window.innerWidth<700){
-    dg.style.gridTemplateColumns='1fr';
-  } else {
-    dg.style.gridTemplateColumns='1fr 1fr';
-  }
-}
-window.addEventListener('resize',handleResize);
-handleResize();
 </script>
 </body>
 </html>
