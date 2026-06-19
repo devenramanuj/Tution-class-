@@ -1,809 +1,1401 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>અક્ષર ટ્યુટોરીયલ્સ મેનેજર</title>
-    <!-- Tailwind CSS (ડિઝાઇન માટે) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        try {
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            brand: {
-                                50: '#f5f3ff',
-                                100: '#ede9fe',
-                                500: '#8b5cf6',
-                                600: '#7c3aed',
-                                700: '#6d28d9',
-                                900: '#4c1d95'
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            console.error("Tailwind loading skipped.");
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>જ્ઞાન જ્યોત – ટ્યુશન મેનેજમેન્ટ</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Hind+Vadodara:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;--navy2:#162032;--saffron:#F4A11D;--gold:#FDE68A;
+  --chalk:#F4F6FA;--white:#fff;--slate:#64748B;--border:#E2E8F0;
+  --green:#22C55E;--red:#EF4444;--blue:#3B82F6;--purple:#8B5CF6;
+  --sidebar:220px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hind Vadodara',sans-serif;background:var(--chalk);color:var(--navy);min-height:100vh}
+
+/* ── LOGIN ── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;background:var(--navy);
+  position:fixed;inset:0;z-index:999;
+}
+.login-box{
+  background:var(--navy2);border:1px solid rgba(244,161,29,.2);
+  border-radius:20px;padding:2.5rem 2rem;width:340px;text-align:center;
+  animation:fadeUp .5s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.6rem;color:var(--saffron);margin-bottom:.3rem}
+.login-logo span{color:#fff}
+.login-sub{color:rgba(255,255,255,.45);font-size:.85rem;margin-bottom:1.8rem}
+.login-box input{
+  width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;padding:12px 14px;color:#fff;
+  font-family:'Hind Vadodara',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;
+  transition:border-color .2s;
+}
+.login-box input:focus{border-color:var(--saffron)}
+.login-box input::placeholder{color:rgba(255,255,255,.3)}
+.login-err{color:#f87171;font-size:.85rem;margin-bottom:.8rem;display:none}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--saffron);color:var(--navy);
+  border:none;padding:11px 20px;border-radius:9px;
+  font-weight:700;font-size:.95rem;cursor:pointer;
+  font-family:'Hind Vadodara',sans-serif;transition:all .2s;
+}
+.btn:hover{background:var(--gold);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-full{width:100%;justify-content:center}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--slate)}
+.btn-outline:hover{border-color:var(--saffron);color:var(--saffron);background:transparent;transform:none}
+.btn-red{background:#FEE2E2;color:var(--red)}
+.btn-red:hover{background:#FECACA}
+.btn-green{background:#DCFCE7;color:#15803D}
+.btn-green:hover{background:#BBF7D0}
+.btn-sm{padding:6px 12px;font-size:.82rem}
+
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh}
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);
+  background:var(--navy);z-index:50;overflow-y:auto;
+  display:flex;flex-direction:column;
+  transition:transform .3s;
+}
+.sb-logo{
+  padding:1.4rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;
+  color:var(--saffron);
+}
+.sb-logo span{color:#fff}
+.sb-nav{flex:1;padding:.6rem 0}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 1.2rem;color:rgba(255,255,255,.55);
+  cursor:pointer;font-size:.9rem;font-weight:500;
+  transition:all .15s;border-left:3px solid transparent;
+}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.active{color:#fff;background:rgba(244,161,29,.12);border-left-color:var(--saffron)}
+.sb-item .icon{font-size:1.1rem;width:22px;text-align:center}
+.sb-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{font-size:.8rem;color:rgba(255,255,255,.4)}
+.sb-user strong{color:rgba(255,255,255,.7);display:block;margin-bottom:2px}
+
+.main{margin-left:var(--sidebar);padding:1.5rem;min-height:100vh}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.5rem;
+}
+.page-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.4rem}
+
+/* ── PAGES ── */
+.page{display:none}
+.page.active{display:block;animation:fadeUp .3s ease}
+
+/* ── CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{
+  background:var(--white);border-radius:14px;padding:1.2rem;
+  border:1px solid var(--border);transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.06)}
+.stat-card .s-icon{font-size:1.6rem;margin-bottom:.5rem}
+.stat-card .s-num{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.8rem;color:var(--navy)}
+.stat-card .s-label{font-size:.8rem;color:var(--slate);margin-top:2px}
+.stat-card.accent{background:var(--navy);border-color:transparent}
+.stat-card.accent .s-num,.stat-card.accent .s-label{color:rgba(255,255,255,.7)}
+.stat-card.accent .s-num{color:var(--saffron)}
+
+/* ── TABLE ── */
+.card{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:1.2rem}
+.card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.2rem;border-bottom:1px solid var(--border);
+}
+.card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{
+  background:var(--chalk);color:var(--slate);
+  font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px;
+  padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);
+}
+.tbl td{padding:11px 12px;font-size:.88rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#FAFBFC}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.75rem;font-weight:700}
+.badge-green{background:#DCFCE7;color:#15803D}
+.badge-red{background:#FEE2E2;color:#B91C1C}
+.badge-yellow{background:#FEF9C3;color:#92400E}
+.badge-blue{background:#DBEAFE;color:#1D4ED8}
+.badge-purple{background:#EDE9FE;color:#6D28D9}
+
+/* ── FORM / MODAL ── */
+.modal-bg{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:200;align-items:center;justify-content:center;padding:1rem;
+  animation:fadeIn .2s;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-bg.open{display:flex}
+.modal{
+  background:var(--white);border-radius:16px;width:100%;max-width:480px;
+  max-height:90vh;overflow-y:auto;
+  animation:fadeUp .3s ease;
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 1.4rem;border-bottom:1px solid var(--border);
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;
+  position:sticky;top:0;background:var(--white);z-index:1;
+}
+.modal-body{padding:1.4rem}
+.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--slate);transition:color .15s}
+.modal-close:hover{color:var(--red)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.form-grid.full{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:.82rem;font-weight:600;color:var(--slate)}
+.field input,.field select,.field textarea{
+  background:var(--chalk);border:1.5px solid var(--border);
+  border-radius:9px;padding:10px 12px;
+  font-family:'Hind Vadodara',sans-serif;font-size:.93rem;
+  color:var(--navy);outline:none;transition:border-color .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--saffron)}
+.field textarea{resize:vertical;min-height:70px}
+.modal-foot{
+  display:flex;gap:.6rem;justify-content:flex-end;
+  padding:1rem 1.4rem;border-top:1px solid var(--border);
+  position:sticky;bottom:0;background:var(--white);
+}
+
+/* attendance grid */
+.att-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem}
+.att-item{
+  background:var(--chalk);border:1.5px solid var(--border);
+  border-radius:10px;padding:.6rem .8rem;cursor:pointer;
+  transition:all .15s;user-select:none;
+}
+.att-item.present{background:#DCFCE7;border-color:#86EFAC;color:#15803D}
+.att-item.absent{background:#FEE2E2;border-color:#FCA5A5;color:#B91C1C}
+.att-item.late{background:#FEF9C3;border-color:#FDE047;color:#92400E}
+.att-name{font-size:.82rem;font-weight:600}
+.att-status{font-size:.72rem;margin-top:2px}
+
+/* marks */
+.marks-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;flex-wrap:wrap}
+.marks-row .std-name{font-weight:600;font-size:.9rem;min-width:120px}
+.marks-row input{
+  width:70px;background:var(--chalk);border:1.5px solid var(--border);
+  border-radius:7px;padding:7px 10px;font-size:.9rem;
+  font-family:'Hind Vadodara',sans-serif;text-align:center;outline:none;
+}
+.marks-row input:focus{border-color:var(--saffron)}
+.grade-badge{min-width:36px;text-align:center}
+
+/* timetable */
+.tt-grid{display:grid;grid-template-columns:80px repeat(6,1fr);gap:2px;font-size:.8rem}
+.tt-head{
+  background:var(--navy);color:var(--saffron);
+  font-family:'Poppins',sans-serif;font-weight:700;
+  padding:8px 6px;text-align:center;border-radius:6px;
+}
+.tt-cell{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:6px;padding:8px 6px;text-align:center;
+  min-height:50px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .15s;font-size:.78rem;
+}
+.tt-cell:hover{background:#FEF3C7}
+.tt-cell.filled{background:#EDE9FE;border-color:#C4B5FD;color:#5B21B6;font-weight:600}
+.tt-time{background:var(--chalk);border-radius:6px;padding:8px 4px;text-align:center;font-weight:600;color:var(--slate);font-size:.75rem;display:flex;align-items:center;justify-content:center}
+
+/* notice */
+.notice-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:.8rem;
+  transition:box-shadow .2s;
+}
+.notice-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.notice-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+.notice-meta{font-size:.78rem;color:var(--slate);margin-bottom:.5rem}
+.notice-body{font-size:.88rem;color:var(--slate);line-height:1.6}
+
+/* toast */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:var(--navy);color:#fff;
+  padding:12px 20px;border-radius:10px;font-size:.9rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  z-index:999;opacity:0;transform:translateY(10px);
+  transition:all .3s;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* search */
+.search-bar{
+  display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;
+}
+.search-bar input{
+  flex:1;min-width:180px;background:var(--white);border:1.5px solid var(--border);
+  border-radius:9px;padding:9px 13px;font-family:'Hind Vadodara',sans-serif;
+  font-size:.9rem;outline:none;transition:border-color .2s;
+}
+.search-bar input:focus{border-color:var(--saffron)}
+.search-bar select{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:9px;padding:9px 12px;font-family:'Hind Vadodara',sans-serif;
+  font-size:.9rem;outline:none;cursor:pointer;
+}
+
+/* fee progress */
+.fee-bar{height:6px;background:var(--border);border-radius:99px;margin-top:4px}
+.fee-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width .4s}
+
+/* confirm modal */
+.confirm-box{
+  text-align:center;padding:2rem 1.5rem;
+}
+.confirm-box .confirm-icon{font-size:2.5rem;margin-bottom:.8rem}
+.confirm-box .confirm-msg{font-size:1rem;font-weight:600;margin-bottom:.3rem}
+.confirm-box .confirm-sub{font-size:.85rem;color:var(--slate);margin-bottom:1.2rem}
+.confirm-box .confirm-btns{display:flex;gap:.6rem;justify-content:center}
+
+/* responsive */
+@media(max-width:700px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:none}
+  .main{margin-left:0;padding:1rem}
+  .form-grid{grid-template-columns:1fr}
+  .tt-grid{grid-template-columns:60px repeat(3,1fr)}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .hamburger{display:flex!important}
+}
+.hamburger{
+  display:none;align-items:center;justify-content:center;
+  width:38px;height:38px;background:var(--navy);border:none;
+  border-radius:8px;color:#fff;font-size:1.2rem;cursor:pointer;margin-right:.6rem;
+}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:40}
+.overlay.open{display:block}
+
+/* empty state */
+.empty{text-align:center;padding:3rem 1rem;color:var(--slate)}
+.empty-icon{font-size:2.5rem;margin-bottom:.8rem}
+.empty p{font-size:.9rem}
+
+/* action buttons */
+.action-btns{display:flex;gap:4px}
+</style>
 </head>
-<body class="bg-gradient-to-tr from-slate-100 via-violet-50 to-blue-50 font-sans text-slate-800 antialiased min-h-screen">
+<body>
 
-    <div class="flex h-screen overflow-hidden">
-        
-        <!-- SIDEBAR (કોમ્પ્યુટર અને ટેબલેટ માટે) -->
-        <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col justify-between hidden md:flex border-r border-slate-800 shadow-2xl">
-            <div class="p-6">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="p-2.5 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-2xl text-white shadow-lg shadow-violet-500/30">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5M21.5 12H18"/></svg>
-                    </div>
-                    <div>
-                        <h1 class="text-base font-extrabold text-white tracking-wide bg-gradient-to-r from-violet-200 to-fuchsia-300 bg-clip-text text-transparent">અક્ષર ટ્યુટોરીયલ્સ</h1>
-                        <span class="text-[10px] text-emerald-400 font-extrabold uppercase tracking-widest">મેનેજમેન્ટ સિસ્ટમ</span>
-                    </div>
-                </div>
-                
-                <nav class="space-y-2">
-                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold transition shadow-lg shadow-violet-600/30">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-                        ડેશબોર્ડ
-                    </button>
-                    <button onclick="switchTab('students')" id="btn-students" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                        વિદ્યાર્થીઓ
-                    </button>
-                    <button onclick="switchTab('attendance')" id="btn-attendance" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-                        હાજરી પત્રક
-                    </button>
-                    <button onclick="switchTab('fees')" id="btn-fees" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-                        ફી કલેક્શન
-                    </button>
-                    <button onclick="switchTab('tests')" id="btn-tests" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-                        પરીક્ષાઓ
-                    </button>
-                </nav>
-            </div>
-            <div class="p-6 border-t border-slate-800 flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 flex items-center justify-center text-xs font-bold text-white shadow">AD</div>
-                <div>
-                    <p class="text-xs font-bold text-white">એડમિન મોડ</p>
-                    <p class="text-[10px] text-violet-400 font-medium">મોબાઈલ રિસ્પોન્સિવ</p>
-                </div>
-            </div>
-        </aside>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">જ્ઞાન <span>જ્યોત</span></div>
+    <div class="login-sub">ટ્યુશન મેનેજમેન્ટ સિસ્ટમ</div>
+    <input type="text" id="loginUser" placeholder="Username (admin)" />
+    <input type="password" id="loginPass" placeholder="Password (1234)" />
+    <div class="login-err" id="loginErr">❌ ખોટો username/password</div>
+    <button class="btn btn-full" onclick="doLogin()">🔐 Login</button>
+  </div>
+</div>
 
-        <!-- MAIN WINDOW -->
-        <div class="flex-1 flex flex-col overflow-y-auto">
-            
-            <!-- TOP BAR -->
-            <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
-                <div>
-                    <h2 id="page-title" class="text-2xl font-black text-slate-900 bg-gradient-to-r from-slate-900 to-violet-800 bg-clip-text text-transparent">ડેશબોર્ડ</h2>
-                    <p id="page-subtitle" class="text-xs font-medium text-slate-500 mt-0.5">ક્લાસની આજની સ્થિતિ</p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="flex items-center gap-2 text-xs bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold px-3 py-1.5 rounded-xl shadow-md shadow-violet-500/10">
-                        <span id="current-date">આજની તારીખ</span>
-                    </div>
-                </div>
-            </header>
+<!-- OVERLAY (mobile) -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-            <!-- MAIN CONTAINER -->
-            <main class="p-4 md:p-6 pb-28 max-w-[1400px] w-full mx-auto flex-1">
-                
-                <!-- 1. DASHBOARD TAB -->
-                <div id="tab-dashboard" class="tab-content space-y-6">
-                    <!-- Colorful Gradients Stats Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                        <!-- Card 1: Students (Indigo Gradient) -->
-                        <div class="bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 p-6 rounded-3xl text-white shadow-xl shadow-indigo-500/20 flex justify-between items-center relative overflow-hidden group">
-                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                            </div>
-                            <div class="z-10">
-                                <span class="text-xs text-indigo-100 font-extrabold uppercase tracking-widest">કુલ વિદ્યાર્થીઓ</span>
-                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-total-students">0</h3>
-                            </div>
-                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                            </div>
-                        </div>
-                        <!-- Card 2: Attendance (Emerald Gradient) -->
-                        <div class="bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-600 p-6 rounded-3xl text-white shadow-xl shadow-emerald-500/20 flex justify-between items-center relative overflow-hidden group">
-                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="m9 16 2 2 4-4"/></svg>
-                            </div>
-                            <div class="z-10">
-                                <span class="text-xs text-emerald-100 font-extrabold uppercase tracking-widest">આજની હાજરી</span>
-                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-attendance-rate">0%</h3>
-                            </div>
-                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="m9 16 2 2 4-4"/></svg>
-                            </div>
-                        </div>
-                        <!-- Card 3: Collected Fees (Cyan to Blue) -->
-                        <div class="bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 p-6 rounded-3xl text-white shadow-xl shadow-blue-500/20 flex justify-between items-center relative overflow-hidden group">
-                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-                            </div>
-                            <div class="z-10">
-                                <span class="text-xs text-blue-100 font-extrabold uppercase tracking-widest">જમા થયેલ ફી</span>
-                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-collected-fees">₹0</h3>
-                            </div>
-                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-                            </div>
-                        </div>
-                        <!-- Card 4: Pending Fees (Amber to Rose) -->
-                        <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-rose-600 p-6 rounded-3xl text-white shadow-xl shadow-orange-500/20 flex justify-between items-center relative overflow-hidden group">
-                            <div class="absolute -right-6 -bottom-6 opacity-10 text-white transition-transform duration-500 group-hover:scale-110">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                            </div>
-                            <div class="z-10">
-                                <span class="text-xs text-amber-100 font-extrabold uppercase tracking-widest">બાકી ફી</span>
-                                <h3 class="text-4xl font-black mt-2 tracking-tight" id="dash-pending-fees">₹0</h3>
-                            </div>
-                            <div class="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/10 text-white z-10 shadow-inner">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                            </div>
-                        </div>
-                    </div>
+<!-- APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-logo">જ્ઞાન <span>જ્યોત</span></div>
+    <nav class="sb-nav">
+      <div class="sb-item active" data-page="dashboard" onclick="goPage('dashboard')"><span class="icon">📊</span>Dashboard</div>
+      <div class="sb-item" data-page="students" onclick="goPage('students')"><span class="icon">👨‍🎓</span>વિદ્યાર્થીઓ</div>
+      <div class="sb-item" data-page="fees" onclick="goPage('fees')"><span class="icon">💰</span>ફી ટ્રેકિંગ</div>
+      <div class="sb-item" data-page="attendance" onclick="goPage('attendance')"><span class="icon">📅</span>હાજરી</div>
+      <div class="sb-item" data-page="marks" onclick="goPage('marks')"><span class="icon">📝</span>ટેસ્ટ માર્ક્સ</div>
+      <div class="sb-item" data-page="homework" onclick="goPage('homework')"><span class="icon">📚</span>Homework</div>
+      <div class="sb-item" data-page="timetable" onclick="goPage('timetable')"><span class="icon">🕐</span>Timetable</div>
+      <div class="sb-item" data-page="notices" onclick="goPage('notices')"><span class="icon">📢</span>Notice Board</div>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user"><strong>Admin</strong>જ્ઞાન જ્યોત ટ્યુશન</div>
+      <button class="btn btn-outline btn-sm" style="margin-top:.6rem;width:100%" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
 
-                    <!-- Quick View Tables -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Recent Admissions Table -->
-                        <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 shadow-xl shadow-slate-100/40">
-                            <h4 class="font-black text-slate-950 mb-4 flex items-center gap-2 text-base">
-                                <span class="w-2.5 h-2.5 rounded-full bg-violet-600"></span>
-                                તાજેતરના એડમિશન
-                            </h4>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead>
-                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                            <th class="pb-3">વિદ્યાર્થી નામ</th>
-                                            <th class="pb-3 text-right">ધોરણ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="dash-recent-students" class="divide-y divide-slate-100 text-sm"></tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Pending Fees Table -->
-                        <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 shadow-xl shadow-slate-100/40">
-                            <h4 class="font-black text-rose-600 mb-4 flex items-center gap-2 text-base">
-                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
-                                બાકી ફી લિસ્ટ
-                            </h4>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead>
-                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                            <th class="pb-3">વિદ્યાર્થી નામ</th>
-                                            <th class="pb-3 text-right">બાકી ફી</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="dash-pending-list" class="divide-y divide-slate-100 text-sm"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. STUDENTS TAB -->
-                <div id="tab-students" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Left: Register Form -->
-                    <div class="lg:col-span-4 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40 h-fit">
-                        <h3 class="font-black text-slate-900 mb-4 text-lg">નવું એડમિશન</h3>
-                        <form id="add-student-form" onsubmit="saveStudent(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">વિદ્યાર્થીનું આખું નામ</label>
-                                <input type="text" id="stu-name" required placeholder="દા.ત. રાહુલ મહેતા" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ધોરણ</label>
-                                    <select id="stu-class" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
-                                        <option value="ધોરણ 8">ધોરણ 8</option>
-                                        <option value="ધોરણ 9">ધોરણ 9</option>
-                                        <option value="ધોરણ 10">ધોરણ 10</option>
-                                        <option value="ધોરણ 11">ધોરણ 11</option>
-                                        <option value="ધોરણ 12">ધોરણ 12</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">બેચ</label>
-                                    <select id="stu-batch" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
-                                        <option value="સવારે 08-10">સવારે 08-10</option>
-                                        <option value="બપોરે 12-02">બપોરે 12-02</option>
-                                        <option value="સાંજે 04-06">સાંજે 04-06</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">વાલીનો મોબાઇલ નંબર</label>
-                                <input type="tel" id="stu-phone" required pattern="[0-9]{10}" placeholder="૧૦ આંકડાનો મોબાઈલ" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">માસિક ફી (₹)</label>
-                                <input type="number" id="stu-fees" required value="1000" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition">
-                            </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-extrabold py-3 rounded-2xl text-sm transition shadow-lg shadow-violet-500/20">
-                                એડમિશન સેવ કરો
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Right: Table List -->
-                    <div class="lg:col-span-8 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                            <h3 class="font-black text-slate-900 text-xl">વિદ્યાર્થીઓની યાદી</h3>
-                            <div class="flex gap-2 w-full sm:w-auto">
-                                <input type="text" id="search-student" oninput="renderStudents()" placeholder="સર્ચ..." class="px-4 py-2.5 border border-slate-200 rounded-2xl text-sm w-full sm:w-48 outline-none focus:ring-2 focus:ring-violet-400 transition">
-                                <select id="filter-class" onchange="renderStudents()" class="px-3 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white font-semibold text-slate-700">
-                                    <option value="all">બધા ધોરણ</option>
-                                    <option value="ધોરણ 8">ધોરણ 8</option>
-                                    <option value="ધોરણ 9">ધોરણ 9</option>
-                                    <option value="ધોરણ 10">ધોરણ 10</option>
-                                    <option value="ધોરણ 11">ધોરણ 11</option>
-                                    <option value="ધોરણ 12">ધોરણ 12</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                        <th class="pb-3 px-2">નામ</th>
-                                        <th class="pb-3 px-2">ધોરણ</th>
-                                        <th class="pb-3 px-2 text-center">ક્રિયા</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="students-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. ATTENDANCE TAB -->
-                <div id="tab-attendance" class="tab-content hidden space-y-6">
-                    <div class="bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                            <div>
-                                <h3 class="font-black text-slate-900 text-xl">હાજરી પત્રક</h3>
-                                <p class="text-xs font-semibold text-slate-400 mt-0.5">વિદ્યાર્થીઓની લાઈવ દૈનિક હાજરી પૂરો</p>
-                            </div>
-                            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
-                                <input type="date" id="attendance-date" onchange="loadAttendance()" class="px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition bg-white font-bold text-slate-700">
-                                <button onclick="markAllAttendance(true)" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-2xl text-xs font-extrabold shadow-md shadow-emerald-500/20 transition">બધા હાજર</button>
-                                <button onclick="markAllAttendance(false)" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2.5 rounded-2xl text-xs font-extrabold shadow-md shadow-rose-500/20 transition">બધા ગેરહાજર</button>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                        <th class="pb-3 px-2">વિદ્યાર્થી નામ</th>
-                                        <th class="pb-3 px-2 text-center">હાજરી સ્થિતિ (P/A)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="attendance-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. FEES TAB -->
-                <div id="tab-fees" class="tab-content hidden space-y-6">
-                    <div class="bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40">
-                        <h3 class="font-black text-slate-900 text-xl mb-4">ફી ટ્રેકર ડેસ્ક</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                        <th class="pb-3 px-2">વિદ્યાર્થી નામ</th>
-                                        <th class="pb-3 px-2">બાકી ફી</th>
-                                        <th class="pb-3 px-2 text-center">એક્શન</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="fees-list-body" class="divide-y divide-slate-100 text-sm"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. TESTS TAB -->
-                <div id="tab-tests" class="tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Create Test Form -->
-                    <div class="lg:col-span-4 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl h-fit">
-                        <h3 class="font-black text-slate-900 mb-4 text-lg">નવો ટેસ્ટ</h3>
-                        <form id="test-form" onsubmit="createTest(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ટેસ્ટનું નામ</label>
-                                <input type="text" id="test-name" required placeholder="દા.ત. યુનિટ ટેસ્ટ-૧" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ધોરણ</label>
-                                    <select id="test-class" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white">
-                                        <option value="ધોરણ 8">ધોરણ 8</option>
-                                        <option value="ધોરણ 9">ધોરણ 9</option>
-                                        <option value="ધોરણ 10">ધોરણ 10</option>
-                                        <option value="ધોરણ 11">ધોરણ 11</option>
-                                        <option value="ધોરણ 12">ધોરણ 12</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">કુલ ગુણ</label>
-                                    <input type="number" id="test-total-marks" required value="25" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-violet-400 transition">
-                                </div>
-                            </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-extrabold py-3 rounded-2xl text-sm transition shadow-lg shadow-violet-500/20">
-                                ટેસ્ટ પેપર બનાવો
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Test Records List -->
-                    <div class="lg:col-span-8 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-slate-200 shadow-xl">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="font-black text-slate-900 text-xl">ગુણ પત્રક એન્ટ્રી</h3>
-                            <select id="select-test" onchange="renderTestMarks()" class="px-3 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none bg-white font-semibold text-slate-700 shadow-sm">
-                                <option value="">ટેસ્ટ પસંદ કરો...</option>
-                            </select>
-                        </div>
-
-                        <div id="test-marks-container" class="hidden space-y-4">
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead>
-                                        <tr class="border-b border-slate-100 text-xs text-slate-400 font-bold uppercase tracking-wider">
-                                            <th class="pb-3 px-2">નામ</th>
-                                            <th class="pb-3 px-2 text-center" id="test-total-label">ગુણ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="test-students-body" class="divide-y divide-slate-100 text-sm"></tbody>
-                                </table>
-                            </div>
-                            <button onclick="saveMarks()" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-extrabold px-6 py-2.5 rounded-2xl text-sm transition ml-auto block shadow-md shadow-emerald-500/20">
-                                ગુણ સાચવો
-                            </button>
-                        </div>
-                        <div id="test-placeholder" class="text-center py-12 text-slate-400 font-medium">
-                            <svg class="w-12 h-12 mx-auto text-slate-300 stroke-1 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            માર્ક્સ એન્ટ્રી કરવા માટે ઉપરથી ટેસ્ટ પસંદ કરો.
-                        </div>
-                    </div>
-                </div>
-
-            </main>
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center">
+        <button class="hamburger" id="hamburger" onclick="toggleSidebar()">☰</button>
+        <div>
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div style="font-size:.78rem;color:var(--slate)" id="todayDate"></div>
         </div>
+      </div>
+      <div id="topbarActions"></div>
     </div>
 
-    <!-- BOTTOM NAVIGATION (મોબાઈલ માટે ખાસ કલરફુલ ગ્લાસમોર્ફિક મેનૂ બાર) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800/80 flex justify-around py-3.5 z-50 md:hidden shadow-2xl rounded-t-[2rem]">
-        <button onclick="switchTab('dashboard')" id="mbtn-dashboard" class="mobile-tab-btn flex flex-col items-center text-violet-400 font-extrabold py-1 transition scale-105">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-            <span class="text-[10px] mt-1 tracking-wider">હોમ</span>
-        </button>
-        <button onclick="switchTab('students')" id="mbtn-students" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span class="text-[10px] mt-1 tracking-wider">વિદ્યાર્થી</span>
-        </button>
-        <button onclick="switchTab('attendance')" id="mbtn-attendance" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-            <span class="text-[10px] mt-1 tracking-wider">હાજરી</span>
-        </button>
-        <button onclick="switchTab('fees')" id="mbtn-fees" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-            <span class="text-[10px] mt-1 tracking-wider">ફી</span>
-        </button>
-        <button onclick="switchTab('tests')" id="mbtn-tests" class="mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            <span class="text-[10px] mt-1 tracking-wider">ટેસ્ટ</span>
-        </button>
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stat-row" id="dashStats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem" id="dashGrid">
+        <div class="card">
+          <div class="card-header"><span class="card-title">તાજેતરના વિદ્યાર્થીઓ</span></div>
+          <table class="tbl" id="dashStudentTbl"><tbody></tbody></table>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">ફી બાકી</span></div>
+          <table class="tbl" id="dashFeesTbl"><tbody></tbody></table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="card-header"><span class="card-title">📢 તાજેતરની Notice</span></div>
+        <div id="dashNotices" style="padding:1rem"></div>
+      </div>
     </div>
 
-    <!-- MAIN APP LOGIC (JAVASCRIPT) -->
-    <script>
-        // MOCK DATA ON FIRST LAUNCH
-        var initialStudents = [
-            { id: 1, name: "ધ્રુવ પ્રજાપતિ", class: "ધોરણ 10", batch: "સાંજે 04-06", phone: "9876543210", monthlyFees: 1200, paidFees: 1200, lastPaidDate: "10/06/2026" },
-            { id: 2, name: "ખુશી શાહ", class: "ધોરણ 12", batch: "સવારે 08-10", phone: "9123456789", monthlyFees: 1500, paidFees: 0, lastPaidDate: "-" },
-            { id: 3, name: "ઓમ વ્યાસ", class: "ધોરણ 10", batch: "સાંજે 04-06", phone: "8877665544", monthlyFees: 1200, paidFees: 600, lastPaidDate: "14/06/2026" }
-        ];
+    <!-- STUDENTS -->
+    <div class="page" id="page-students">
+      <div class="search-bar">
+        <input type="text" id="stuSearch" placeholder="🔍 નામ / ધોરણ શોધો..." oninput="renderStudents()">
+        <select id="stuFilter" onchange="renderStudents()">
+          <option value="">બધા ધોરણ</option>
+          <option>ધો. 5</option><option>ધો. 6</option><option>ધો. 7</option>
+          <option>ધો. 8</option><option>ધો. 9</option><option>ધો. 10</option>
+          <option>ધો. 11</option><option>ધો. 12</option>
+        </select>
+        <button class="btn btn-sm" onclick="openAddStudent()">+ વિદ્યાર્થી ઉમેરો</button>
+      </div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>#</th><th>નામ</th><th>ધો.</th><th>Board</th><th>Mobile</th><th>Batch</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="stuTbody"></tbody>
+        </table>
+      </div>
+    </div>
 
-        var initialTests = [
-            { id: 101, name: "ગણિત - ટેસ્ટ 1", class: "ધોરણ 10", totalMarks: 30, marks: { 1: 28, 3: 15 } }
-        ];
+    <!-- FEES -->
+    <div class="page" id="page-fees">
+      <div class="search-bar">
+        <input type="text" id="feeSearch" placeholder="🔍 નામ શોધો..." oninput="renderFees()">
+        <select id="feeFilter" onchange="renderFees()">
+          <option value="">બધા</option>
+          <option value="paid">ભર્યેલ</option>
+          <option value="pending">બાકી</option>
+          <option value="partial">આંશિક</option>
+        </select>
+        <button class="btn btn-sm" onclick="openAddFee()">+ ફી ઉમેરો</button>
+      </div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>વિદ્યાર્થી</th><th>ધો.</th><th>માસ</th><th>કુલ</th><th>ભર્યેલ</th><th>બાકી</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="feeTbody"></tbody>
+        </table>
+      </div>
+    </div>
 
-        var students = initialStudents;
-        var attendanceDb = {};
-        var tests = initialTests;
+    <!-- ATTENDANCE -->
+    <div class="page" id="page-attendance">
+      <div class="search-bar">
+        <input type="date" id="attDate" onchange="renderAttendance()">
+        <select id="attBatch" onchange="renderAttendance()">
+          <option value="">બધા Batch</option>
+          <option>A Batch</option><option>B Batch</option><option>C Batch</option>
+        </select>
+        <button class="btn btn-sm" onclick="saveAttendance()">💾 સેવ કરો</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📅 હાજરી નોંધ</span>
+          <span id="attSummary" style="font-size:.82rem;color:var(--slate)"></span>
+        </div>
+        <div style="padding:1rem" id="attGrid"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">📊 માસિક હાજરી</span></div>
+        <table class="tbl">
+          <thead><tr><th>વિદ્યાર્થી</th><th>કુલ દિવસ</th><th>હાજર</th><th>ગેરહાજર</th><th>%</th></tr></thead>
+          <tbody id="attSummaryTbl"></tbody>
+        </table>
+      </div>
+    </div>
 
-        // SAFE LOCAL STORAGE READ
-        try {
-            students = JSON.parse(localStorage.getItem('tc_students')) || initialStudents;
-            attendanceDb = JSON.parse(localStorage.getItem('tc_attendance')) || {};
-            tests = JSON.parse(localStorage.getItem('tc_tests')) || initialTests;
-        } catch (e) {
-            console.warn("LocalStorage blocked. Falling back to temporary memory.");
-        }
+    <!-- MARKS -->
+    <div class="page" id="page-marks">
+      <div class="search-bar">
+        <button class="btn btn-sm" onclick="openModal('markModal')">+ ટેસ્ટ ઉમેરો</button>
+        <select id="markFilter" onchange="renderMarks()">
+          <option value="">બધા ટેસ્ટ</option>
+        </select>
+      </div>
+      <div id="marksList"></div>
+    </div>
 
-        // SAFE TODAY STR GENERATION
-        var todayStr = "";
-        try {
-            todayStr = new Date().toISOString().split('T')[0];
-        } catch (e) {
-            var d = new Date();
-            todayStr = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
-        }
+    <!-- HOMEWORK -->
+    <div class="page" id="page-homework">
+      <div style="margin-bottom:1rem">
+        <button class="btn btn-sm" onclick="openModal('hwModal')">+ Homework ઉમેરો</button>
+      </div>
+      <div id="hwList"></div>
+    </div>
 
-        document.getElementById('attendance-date').value = todayStr;
+    <!-- TIMETABLE -->
+    <div class="page" id="page-timetable">
+      <div style="margin-bottom:1rem;display:flex;gap:.6rem;align-items:center">
+        <select id="ttBatch" onchange="renderTimetable()">
+          <option>A Batch</option><option>B Batch</option><option>C Batch</option>
+        </select>
+        <button class="btn btn-sm btn-outline" onclick="clearTimetable()">🗑 ખાલી કરો</button>
+      </div>
+      <div class="card" style="overflow-x:auto;padding:1rem">
+        <div class="tt-grid" id="ttGrid"></div>
+      </div>
+    </div>
 
-        // SAFE DATE FORMATTING FOR GUJARATI
-        var formattedDate = "";
-        try {
-            formattedDate = new Date().toLocaleDateString('gu-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-        } catch (e) {
-            formattedDate = new Date().toDateString();
-        }
-        document.getElementById('current-date').innerText = formattedDate;
+    <!-- NOTICES -->
+    <div class="page" id="page-notices">
+      <div style="margin-bottom:1rem">
+        <button class="btn btn-sm" onclick="openModal('noticeModal')">+ Notice ઉમેરો</button>
+      </div>
+      <div id="noticeList"></div>
+    </div>
+  </div>
+</div>
 
-        // UTILITY: SAVE TO LOCALSTORAGE
-        function saveData() {
-            try {
-                localStorage.setItem('tc_students', JSON.stringify(students));
-                localStorage.setItem('tc_attendance', JSON.stringify(attendanceDb));
-                localStorage.setItem('tc_tests', JSON.stringify(tests));
-            } catch (e) {
-                console.warn("Save failed.");
-            }
-            renderDashboard();
-        }
+<!-- ── MODALS ── -->
 
-        // TAB NAVIGATION
-        function switchTab(tabId) {
-            try {
-                // Hide all contents
-                var contents = document.querySelectorAll('.tab-content');
-                for (var i = 0; i < contents.length; i++) {
-                    contents[i].classList.add('hidden');
-                }
-                
-                // Reset Sidebar Buttons (Desktop)
-                var sidebarBtns = document.querySelectorAll('.tab-btn');
-                for (var j = 0; j < sidebarBtns.length; j++) {
-                    sidebarBtns[j].className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white font-semibold transition";
-                }
+<!-- Student Modal -->
+<div class="modal-bg" id="stuModal">
+  <div class="modal">
+    <div class="modal-head"><span id="stuModalTitle">નવો વિદ્યાર્થી</span><button class="modal-close" onclick="closeModal('stuModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="stuId">
+      <div class="form-grid">
+        <div class="field"><label>નામ *</label><input id="stuName" placeholder="સંપૂર્ણ નામ"></div>
+        <div class="field"><label>ધોરણ *</label>
+          <select id="stuStd">
+            <option>ધો. 5</option><option>ધો. 6</option><option>ધો. 7</option>
+            <option>ધો. 8</option><option>ધો. 9</option><option>ધો. 10</option>
+            <option>ધો. 11</option><option>ધો. 12</option>
+          </select>
+        </div>
+        <div class="field"><label>Board</label>
+          <select id="stuBoard">
+            <option>GSEB</option><option>CBSE</option><option>ICSE</option>
+          </select>
+        </div>
+        <div class="field"><label>Batch</label>
+          <select id="stuBatch"><option>A Batch</option><option>B Batch</option><option>C Batch</option></select>
+        </div>
+        <div class="field"><label>Parent Mobile *</label><input id="stuMobile" placeholder="10 આંકડા" maxlength="10"></div>
+        <div class="field"><label>માસિક ફી ₹</label><input id="stuFee" type="number" placeholder="900"></div>
+        <div class="field"><label>જોડાયા તારીખ</label><input id="stuJoin" type="date"></div>
+        <div class="field"><label>Status</label>
+          <select id="stuStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:.8rem"><label>સ્કૂલ / Notes</label><textarea id="stuNotes" placeholder="..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('stuModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveStudent()">💾 સેવ</button>
+    </div>
+  </div>
+</div>
 
-                // Reset Bottom Navigation Buttons (Mobile)
-                var mobileBtns = document.querySelectorAll('.mobile-tab-btn');
-                for (var k = 0; k < mobileBtns.length; k++) {
-                    mobileBtns[k].className = "mobile-tab-btn flex flex-col items-center text-slate-400 font-semibold py-1 transition";
-                }
+<!-- Fee Modal -->
+<div class="modal-bg" id="feeModal">
+  <div class="modal">
+    <div class="modal-head"><span>ફી એન્ટ્રી</span><button class="modal-close" onclick="closeModal('feeModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="feeId">
+      <div class="form-grid">
+        <div class="field"><label>વિદ્યાર્થી *</label>
+          <select id="feeStudent"></select>
+        </div>
+        <div class="field"><label>માસ *</label>
+          <select id="feeMonth">
+            <option>જૂન</option><option>જુલાઈ</option><option>ઓગસ્ટ</option>
+            <option>સપ્ટેમ્બર</option><option>ઓક્ટોબર</option><option>નવેમ્બર</option>
+            <option>ડિસેમ્બર</option><option>જાન્યુઆરી</option><option>ફેબ્રુઆરી</option>
+            <option>માર્ચ</option><option>એપ્રિલ</option><option>મે</option>
+          </select>
+        </div>
+        <div class="field"><label>કુલ ફી ₹ *</label><input id="feeTotal" type="number" placeholder="900"></div>
+        <div class="field"><label>ભર્યેલ ₹</label><input id="feePaid" type="number" placeholder="900"></div>
+        <div class="field"><label>ચૂકવ્યા તારીખ</label><input id="feeDate" type="date"></div>
+        <div class="field"><label>ચૂકવણી પ્રકાર</label>
+          <select id="feeMode"><option>Cash</option><option>UPI</option><option>Bank</option></select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:.8rem"><label>Note</label><textarea id="feeNote" placeholder="..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('feeModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveFee()">💾 સેવ</button>
+    </div>
+  </div>
+</div>
 
-                // Show Selected Tab Content
-                var activeTab = document.getElementById("tab-" + tabId);
-                if (activeTab) {
-                    activeTab.classList.remove('hidden');
-                }
+<!-- Marks Modal -->
+<div class="modal-bg" id="markModal">
+  <div class="modal">
+    <div class="modal-head"><span>ટેસ્ટ ઉમેરો</span><button class="modal-close" onclick="closeModal('markModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>ટેસ્ટ નામ *</label><input id="markName" placeholder="Unit Test 1"></div>
+        <div class="field"><label>વિષય *</label>
+          <select id="markSubject">
+            <option>ગણિત</option><option>વિજ્ઞાન</option><option>English</option>
+            <option>ગુજરાતી</option><option>સા. વિજ્ઞાન</option><option>Computer</option>
+          </select>
+        </div>
+        <div class="field"><label>ધો.</label>
+          <select id="markStd">
+            <option>ધો. 5</option><option>ધો. 6</option><option>ધો. 7</option>
+            <option>ધો. 8</option><option>ધો. 9</option><option>ધો. 10</option>
+            <option>ધો. 11</option><option>ધો. 12</option>
+          </select>
+        </div>
+        <div class="field"><label>કુલ માર્ક્સ</label><input id="markTotal" type="number" value="100"></div>
+        <div class="field full"><label>તારીખ</label><input id="markDate" type="date"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('markModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveTest()">💾 ટેસ્ટ બનાવો</button>
+    </div>
+  </div>
+</div>
 
-                // Set Active Sidebar Button
-                var activeBtn = document.getElementById("btn-" + tabId);
-                if (activeBtn) {
-                    activeBtn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold transition shadow-lg shadow-violet-600/30";
-                }
+<!-- Homework Modal -->
+<div class="modal-bg" id="hwModal">
+  <div class="modal">
+    <div class="modal-head"><span>Homework ઉમેરો</span><button class="modal-close" onclick="closeModal('hwModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>વિષય *</label>
+          <select id="hwSubject">
+            <option>ગણિત</option><option>વિજ્ઞાન</option><option>English</option>
+            <option>ગુજરાતી</option><option>સા. વિજ્ઞાન</option><option>Computer</option>
+          </select>
+        </div>
+        <div class="field"><label>ધો.</label>
+          <select id="hwStd">
+            <option>ધો. 5</option><option>ધો. 6</option><option>ધો. 7</option>
+            <option>ધો. 8</option><option>ધો. 9</option><option>ધો. 10</option>
+            <option>ધો. 11</option><option>ધો. 12</option>
+          </select>
+        </div>
+        <div class="field"><label>આપ્યા તારીખ</label><input id="hwGiven" type="date"></div>
+        <div class="field"><label>જમા તારીખ</label><input id="hwDue" type="date"></div>
+      </div>
+      <div class="field" style="margin-top:.8rem"><label>Homework વિગત *</label><textarea id="hwDesc" placeholder="Exercise 3.1 Q1-10..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('hwModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveHomework()">💾 સેવ</button>
+    </div>
+  </div>
+</div>
 
-                // Set Active Mobile Button
-                var activeMobileBtn = document.getElementById("mbtn-" + tabId);
-                if (activeMobileBtn) {
-                    activeMobileBtn.className = "mobile-tab-btn flex flex-col items-center text-violet-400 font-extrabold py-1 transition scale-105";
-                }
+<!-- Notice Modal -->
+<div class="modal-bg" id="noticeModal">
+  <div class="modal">
+    <div class="modal-head"><span>Notice ઉમેરો</span><button class="modal-close" onclick="closeModal('noticeModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="noticeEditId">
+      <div class="form-grid full">
+        <div class="field"><label>શીર્ષક *</label><input id="noticeTitle" placeholder="Notice શીર્ષક"></div>
+        <div class="field"><label>પ્રકાર</label>
+          <select id="noticeType">
+            <option>સામાન્ય</option><option>પરીક્ષા</option><option>રજા</option><option>ઈવેન્ટ</option><option>ફી</option>
+          </select>
+        </div>
+        <div class="field"><label>સંદેશ *</label><textarea id="noticeBody" placeholder="..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('noticeModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveNotice()">💾 પ્રકાશિત</button>
+    </div>
+  </div>
+</div>
 
-                // Update Titles
-                var titles = {
-                    dashboard: { main: "ડેશબોર્ડ", sub: "ક્લાસની આજની સ્થિતિ" },
-                    students: { main: "એડમિશન", sub: "નવા વિદ્યાર્થીઓ ઉમેરો" },
-                    attendance: { main: "હાજરી પત્રક", sub: "દૈનિક હાજરીનો રેકોર્ડ" },
-                    fees: { main: "ફી કલેક્શન", sub: "ફી ટ્રેકર" },
-                    tests: { main: "પરીક્ષા", sub: "માર્ક્સ અને પરિણામો" }
-                };
+<!-- Timetable Cell Modal -->
+<div class="modal-bg" id="ttModal">
+  <div class="modal" style="max-width:320px">
+    <div class="modal-head"><span id="ttModalTitle">Class ઉમેરો</span><button class="modal-close" onclick="closeModal('ttModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="ttKey">
+      <div class="field"><label>વિષય</label>
+        <select id="ttSubject">
+          <option value="">-- ખાલી --</option>
+          <option>ગણિત</option><option>વિજ્ઞાન</option><option>English</option>
+          <option>ગુજરાતી</option><option>સા. વિજ્ઞાન</option><option>Computer</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('ttModal')">રદ</button>
+      <button class="btn btn-sm" onclick="saveTTCell()">💾 સેવ</button>
+    </div>
+  </div>
+</div>
 
-                if (titles[tabId]) {
-                    document.getElementById('page-title').innerText = titles[tabId].main;
-                    document.getElementById('page-subtitle').innerText = titles[tabId].sub;
-                }
+<!-- Confirm Modal -->
+<div class="modal-bg" id="confirmModal">
+  <div class="modal" style="max-width:360px">
+    <div class="confirm-box">
+      <div class="confirm-icon" id="confirmIcon">⚠️</div>
+      <div class="confirm-msg" id="confirmMsg">શું ચોક્કસ છે?</div>
+      <div class="confirm-sub" id="confirmSub">આ ક્રિયા પાછી પાળી શકાશે નહીં.</div>
+      <div class="confirm-btns">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('confirmModal')">રદ કરો</button>
+        <button class="btn btn-sm btn-red" id="confirmYes" onclick="">હા, Delete કરો</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-                // Specific Renderers
-                if (tabId === 'students') renderStudents();
-                if (tabId === 'attendance') loadAttendance();
-                if (tabId === 'fees') renderFees();
-                if (tabId === 'tests') loadTestsSelector();
-                
-            } catch (err) {
-                console.error("Error in switchTab: " + err.message);
-            }
-        }
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-        // --- DASHBOARD ---
-        function renderDashboard() {
-            try {
-                var total = students.length;
-                document.getElementById('dash-total-students').innerText = total;
+<script>
+// ── DATA ──
+var PASS = {admin:'1234'};
+var DB = JSON.parse(localStorage.getItem('tuition_db')||'{}');
+if(!DB.students) DB.students=[];
+if(!DB.fees) DB.fees=[];
+if(!DB.attendance) DB.attendance={};
+if(!DB.tests) DB.tests=[];
+if(!DB.homework) DB.homework=[];
+if(!DB.timetable) DB.timetable={};
+if(!DB.notices) DB.notices=[];
 
-                var todayRecord = attendanceDb[todayStr] || {};
-                var totalPresent = Object.keys(todayRecord).filter(function(k) { return todayRecord[k] === 'P'; }).length;
-                var attendanceRate = total > 0 ? Math.round((totalPresent / total) * 100) : 0;
-                document.getElementById('dash-attendance-rate').innerText = attendanceRate + "%";
+// Seed sample data if empty
+if(!DB.students.length){
+  DB.students=[
+    {id:1,name:'ભૂમિ પટેલ',std:'ધો. 10',board:'GSEB',batch:'B Batch',mobile:'9876543210',fee:900,join:'2024-06-01',status:'active',notes:'GSEB Gujarati medium'},
+    {id:2,name:'રોહન શાહ',std:'ધો. 8',board:'CBSE',batch:'A Batch',mobile:'9876543211',fee:750,join:'2024-06-05',status:'active',notes:''},
+    {id:3,name:'દીપા મહેતા',std:'ધો. 12',board:'GSEB',batch:'C Batch',mobile:'9876543212',fee:1200,join:'2024-06-03',status:'active',notes:'Science stream'},
+    {id:4,name:'આર્યન જોષી',std:'ધો. 7',board:'CBSE',batch:'A Batch',mobile:'9876543213',fee:600,join:'2024-07-01',status:'active',notes:''},
+  ];
+  DB.fees=[
+    {id:1,studentId:1,month:'જૂન',total:900,paid:900,date:'2024-06-05',mode:'UPI',note:''},
+    {id:2,studentId:2,month:'જૂન',total:750,paid:500,date:'2024-06-10',mode:'Cash',note:'250 બાકી'},
+    {id:3,studentId:3,month:'જૂન',total:1200,paid:1200,date:'2024-06-03',mode:'Bank',note:''},
+    {id:4,studentId:4,month:'જૂન',total:600,paid:0,date:'',mode:'',note:''},
+  ];
+  DB.notices=[
+    {id:1,title:'Unit Test 1 — ગણિત',type:'પરીક્ષા',body:'15 જૂલાઈ ના રોજ ગણિત Unit Test 1 લેવાશે. Chapter 1-3 નો અભ્યાસ કરો.',date:'2024-07-10'},
+    {id:2,title:'ગુરુ પૂર્ણિમા — રજા',type:'રજા',body:'21 જૂલાઈ (ગુરુ પૂર્ણિમા) ના રોજ ક્લાસ બંધ રહેશે.',date:'2024-07-15'},
+  ];
+  saveDB();
+}
 
-                var collected = students.reduce(function(sum, s) { return sum + s.paidFees; }, 0);
-                var totalRequired = students.reduce(function(sum, s) { return sum + s.monthlyFees; }, 0);
-                var pending = Math.max(0, totalRequired - collected);
+function saveDB(){localStorage.setItem('tuition_db',JSON.stringify(DB))}
+function uid(){return Date.now()+''+Math.random().toString(36).slice(2,6)}
 
-                document.getElementById('dash-collected-fees').innerText = "₹" + collected;
-                document.getElementById('dash-pending-fees').innerText = "₹" + pending;
+// ── CUSTOM CONFIRM ──
+var confirmCallback = null;
+function showConfirm(msg, sub, cb){
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmSub').textContent = sub || 'આ ક્રિયા પાછી પાળી શકાશે નહીં.';
+  confirmCallback = cb;
+  document.getElementById('confirmYes').onclick = function(){
+    closeModal('confirmModal');
+    if(confirmCallback) confirmCallback();
+    confirmCallback = null;
+  };
+  openModal('confirmModal');
+}
 
-                // Recent Students Table
-                var recentBody = document.getElementById('dash-recent-students');
-                recentBody.innerHTML = '';
-                students.slice(-3).reverse().forEach(function(s) {
-                    recentBody.innerHTML += '<tr class="hover:bg-violet-50/50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800">' + s.name + '</td><td class="py-3 px-2 text-slate-500 text-xs text-right font-medium">' + s.class + '</td></tr>';
-                });
+// ── AUTH ──
+function doLogin(){
+  var u=document.getElementById('loginUser').value.trim();
+  var p=document.getElementById('loginPass').value;
+  if(PASS[u]===p){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').style.display='block';
+    initApp();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+function doLogout(){
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
 
-                // Pending Fees Table
-                var pendingBody = document.getElementById('dash-pending-list');
-                pendingBody.innerHTML = '';
-                students.filter(function(s) { return s.monthlyFees - s.paidFees > 0; }).slice(0, 3).forEach(function(s) {
-                    var due = s.monthlyFees - s.paidFees;
-                    pendingBody.innerHTML += '<tr class="hover:bg-rose-50/50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800">' + s.name + '</td><td class="py-3 px-2 text-rose-600 font-extrabold text-xs text-right">₹' + due + '</td></tr>';
-                });
-            } catch (err) {
-                console.error("Error in renderDashboard: " + err.message);
-            }
-        }
+// ── INIT ──
+function initApp(){
+  var today=new Date();
+  document.getElementById('todayDate').textContent=today.toLocaleDateString('gu-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('attDate').value=today.toISOString().split('T')[0];
+  document.getElementById('markDate').value=today.toISOString().split('T')[0];
+  document.getElementById('hwGiven').value=today.toISOString().split('T')[0];
+  document.getElementById('feeDate').value=today.toISOString().split('T')[0];
+  goPage('dashboard');
+}
 
-        // --- STUDENTS ---
-        function saveStudent(event) {
-            event.preventDefault();
-            try {
-                var name = document.getElementById('stu-name').value;
-                var cls = document.getElementById('stu-class').value;
-                var batch = document.getElementById('stu-batch').value;
-                var phone = document.getElementById('stu-phone').value;
-                var fees = parseInt(document.getElementById('stu-fees').value);
+// ── NAVIGATION ──
+function goPage(page){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.sb-item').forEach(function(i){i.classList.remove('active')});
+  document.getElementById('page-'+page).classList.add('active');
+  var sbItem = document.querySelector('[data-page="'+page+'"]');
+  if(sbItem) sbItem.classList.add('active');
+  var titles={dashboard:'Dashboard',students:'વિદ્યાર્થીઓ',fees:'ફી ટ્રેકિંગ',attendance:'હાજરી',marks:'ટેસ્ટ માર્ક્સ',homework:'Homework',timetable:'Timetable',notices:'Notice Board'};
+  document.getElementById('pageTitle').textContent=titles[page]||page;
+  closeSidebar();
+  if(page==='dashboard') renderDashboard();
+  if(page==='students') renderStudents();
+  if(page==='fees'){populateFeeStudents();renderFees();}
+  if(page==='attendance') renderAttendance();
+  if(page==='marks') renderMarks();
+  if(page==='homework') renderHomework();
+  if(page==='timetable') renderTimetable();
+  if(page==='notices') renderNotices();
+}
 
-                var newStudent = {
-                    id: Date.now(),
-                    name: name,
-                    class: cls,
-                    batch: batch,
-                    phone: phone,
-                    monthlyFees: fees,
-                    paidFees: 0,
-                    lastPaidDate: "-"
-                };
+// ── SIDEBAR MOBILE ──
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
 
-                students.push(newStudent);
-                saveData();
-                document.getElementById('add-student-form').reset();
-                renderStudents();
-            } catch (err) {
-                console.error(err);
-            }
-        }
+// ── MODAL ──
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
 
-        function deleteStudent(id) {
-            if (confirm("આ વિદ્યાર્થીનું એડમિશન રદ કરવા માંગો છો?")) {
-                students = students.filter(function(s) { return s.id !== id; });
-                saveData();
-                renderStudents();
-            }
-        }
+// ── TOAST ──
+function toast(msg,color){
+  color = color || '#0D1B2A';
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.style.background=color;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
+}
 
-        function renderStudents() {
-            try {
-                var tbody = document.getElementById('students-list-body');
-                var searchVal = document.getElementById('search-student').value.toLowerCase();
-                var classFilter = document.getElementById('filter-class').value;
+// ── HELPERS ──
+function stuName(id){var s=DB.students.find(function(x){return x.id==id});return s?s.name:'?'}
+function stuStd(id){var s=DB.students.find(function(x){return x.id==id});return s?s.std:''}
+function getGrade(mark,total){
+  var pct=mark/total*100;
+  if(pct>=90)return{g:'A+',cls:'badge-purple'};
+  if(pct>=75)return{g:'A',cls:'badge-green'};
+  if(pct>=60)return{g:'B',cls:'badge-blue'};
+  if(pct>=45)return{g:'C',cls:'badge-yellow'};
+  return{g:'D',cls:'badge-red'};
+}
+function fmtDate(d){if(!d)return'—';var dt=new Date(d);return dt.toLocaleDateString('gu-IN')}
 
-                tbody.innerHTML = '';
-                var filtered = students.filter(function(s) {
-                    var matchesSearch = s.name.toLowerCase().indexOf(searchVal) !== -1;
-                    var matchesClass = classFilter === 'all' || s.class === classFilter;
-                    return matchesSearch && matchesClass;
-                });
+// ── DASHBOARD ──
+function renderDashboard(){
+  var total=DB.students.filter(function(s){return s.status==='active'}).length;
+  var pending=DB.fees.filter(function(f){return f.paid<f.total}).length;
+  var collected=DB.fees.reduce(function(a,f){return a+Number(f.paid)},0);
+  var due=DB.fees.reduce(function(a,f){return a+(Number(f.total)-Number(f.paid))},0);
 
-                filtered.forEach(function(s) {
-                    tbody.innerHTML += '<tr class="hover:bg-violet-50/30 border-b border-slate-100"><td class="py-3.5 px-2 font-bold text-slate-800 text-xs">' + s.name + '</td><td class="py-3.5 px-2 text-slate-500 font-semibold text-xs">' + s.class + '</td><td class="py-3.5 px-2 text-center"><button onclick="deleteStudent(' + s.id + ')" class="text-rose-500 hover:text-rose-700 p-1.5 hover:bg-rose-50 rounded-xl transition inline-flex items-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></td></tr>';
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        }
+  document.getElementById('dashStats').innerHTML=
+    '<div class="stat-card"><div class="s-icon">👨‍🎓</div><div class="s-num">'+total+'</div><div class="s-label">સક્રિય વિદ્યાર્થીઓ</div></div>'+
+    '<div class="stat-card"><div class="s-icon">💰</div><div class="s-num">₹'+collected.toLocaleString()+'</div><div class="s-label">ફી વસૂલ</div></div>'+
+    '<div class="stat-card accent"><div class="s-icon">⚠️</div><div class="s-num">₹'+due.toLocaleString()+'</div><div class="s-label">ફી બાકી</div></div>'+
+    '<div class="stat-card"><div class="s-icon">📢</div><div class="s-num">'+DB.notices.length+'</div><div class="s-label">Notices</div></div>';
 
-        // --- ATTENDANCE ---
-        function loadAttendance() {
-            try {
-                var date = document.getElementById('attendance-date').value;
-                if (!attendanceDb[date]) {
-                    attendanceDb[date] = {};
-                }
+  var rb=document.querySelector('#dashStudentTbl tbody');
+  var recentStu = DB.students.slice(-5).reverse();
+  if(recentStu.length){
+    rb.innerHTML=recentStu.map(function(s){
+      return '<tr><td><b>'+s.name+'</b></td><td>'+s.std+'</td><td><span class="badge badge-blue">'+s.batch+'</span></td></tr>';
+    }).join('');
+  } else {
+    rb.innerHTML='<tr><td colspan="3" class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી નહીં</p></td></tr>';
+  }
 
-                var tbody = document.getElementById('attendance-list-body');
-                tbody.innerHTML = '';
+  var pf=DB.fees.filter(function(f){return f.paid<f.total});
+  if(pf.length){
+    document.querySelector('#dashFeesTbl tbody').innerHTML=pf.slice(0,5).map(function(f){
+      return '<tr><td><b>'+stuName(f.studentId)+'</b></td><td>'+f.month+'</td><td class="badge badge-red">₹'+(f.total-f.paid)+' બાકી</td></tr>';
+    }).join('');
+  } else {
+    document.querySelector('#dashFeesTbl tbody').innerHTML='<tr><td colspan="3" style="text-align:center;padding:1rem;color:var(--green)">✅ બધી ફી ભરાઈ ગઈ</td></tr>';
+  }
 
-                students.forEach(function(s) {
-                    var status = attendanceDb[date][s.id] || 'A';
-                    var btnP = status === 'P' ? 'bg-gradient-to-r from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-500/20' : 'bg-slate-100 text-slate-500';
-                    var btnA = status === 'A' ? 'bg-gradient-to-r from-rose-400 to-rose-600 text-white shadow-md shadow-rose-500/20' : 'bg-slate-100 text-slate-500';
+  var recentNotices = DB.notices.slice(-2).reverse();
+  if(recentNotices.length){
+    document.getElementById('dashNotices').innerHTML=recentNotices.map(function(n){
+      return '<div class="notice-card" style="margin-bottom:.6rem"><div class="notice-title">'+n.title+'</div><div class="notice-body">'+n.body+'</div></div>';
+    }).join('');
+  } else {
+    document.getElementById('dashNotices').innerHTML='<div style="color:var(--slate);font-size:.9rem">કોઈ Notice નહીં</div>';
+  }
+}
 
-                    tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-150"><td class="py-3 px-2 font-extrabold text-slate-800 text-xs">' + s.name + ' <span class="text-[9px] text-slate-400 font-bold">(' + s.class + ')</span></td><td class="py-3 text-center flex justify-center gap-2"><button onclick="setAttendance(\'' + date + '\', ' + s.id + ', \'P\')" class="px-3.5 py-1.5 rounded-2xl text-xs font-black transition ' + btnP + '">P</button><button onclick="setAttendance(\'' + date + '\', ' + s.id + ', \'A\')" class="px-3.5 py-1.5 rounded-2xl text-xs font-black transition ' + btnA + '">A</button></td></tr>';
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        }
+// ── STUDENTS ──
+function renderStudents(){
+  var q=document.getElementById('stuSearch').value.toLowerCase();
+  var f=document.getElementById('stuFilter').value;
+  var list=DB.students.filter(function(s){
+    var match=s.name.toLowerCase().indexOf(q)>=0||s.std.indexOf(q)>=0;
+    var stdMatch=f?s.std===f:true;
+    return match&&stdMatch;
+  });
+  var tbody=document.getElementById('stuTbody');
+  if(!list.length){
+    tbody.innerHTML='<tr><td colspan="8"><div class="empty"><div class="empty-icon">👨‍🎓</div><p>કોઈ વિદ્યાર્થી મળ્યા નહીં</p></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML=list.map(function(s,i){
+    return '<tr>'+
+      '<td>'+(i+1)+'</td>'+
+      '<td><b>'+s.name+'</b></td>'+
+      '<td>'+s.std+'</td>'+
+      '<td><span class="badge badge-blue">'+s.board+'</span></td>'+
+      '<td>'+s.mobile+'</td>'+
+      '<td>'+s.batch+'</td>'+
+      '<td><span class="badge '+(s.status==='active'?'badge-green':'badge-red')+'">'+(s.status==='active'?'Active':'Inactive')+'</span></td>'+
+      '<td><div class="action-btns">'+
+        '<button class="btn btn-sm btn-outline" onclick="editStudent('+s.id+')">✏️</button>'+
+        '<button class="btn btn-sm btn-red" onclick="deleteStudent('+s.id+')">🗑</button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
 
-        function setAttendance(date, stuId, status) {
-            attendanceDb[date][stuId] = status;
-            saveData();
-            loadAttendance();
-        }
+function openAddStudent(){
+  document.getElementById('stuId').value='';
+  document.getElementById('stuModalTitle').textContent='નવો વિદ્યાર્થી';
+  ['stuName','stuMobile','stuFee','stuNotes'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('stuStd').value='ધો. 5';
+  document.getElementById('stuBoard').value='GSEB';
+  document.getElementById('stuBatch').value='A Batch';
+  document.getElementById('stuStatus').value='active';
+  document.getElementById('stuJoin').value=new Date().toISOString().split('T')[0];
+  openModal('stuModal');
+}
 
-        // --- FEES ---
-        function renderFees() {
-            try {
-                var tbody = document.getElementById('fees-list-body');
-                tbody.innerHTML = '';
+function editStudent(id){
+  var s=DB.students.find(function(x){return Number(x.id)===Number(id)});
+  if(!s)return;
+  document.getElementById('stuId').value=s.id;
+  document.getElementById('stuModalTitle').textContent='વિદ્યાર્થી સુધારો';
+  document.getElementById('stuName').value=s.name;
+  document.getElementById('stuStd').value=s.std;
+  document.getElementById('stuBoard').value=s.board;
+  document.getElementById('stuBatch').value=s.batch;
+  document.getElementById('stuMobile').value=s.mobile;
+  document.getElementById('stuFee').value=s.fee;
+  document.getElementById('stuJoin').value=s.join;
+  document.getElementById('stuStatus').value=s.status;
+  document.getElementById('stuNotes').value=s.notes||'';
+  openModal('stuModal');
+}
 
-                students.forEach(function(s) {
-                    var pending = s.monthlyFees - s.paidFees;
-                    var btnState = pending === 0 ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-inner' : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20 font-bold';
-                    var disabledStr = pending === 0 ? 'disabled' : '';
+function saveStudent(){
+  var name=document.getElementById('stuName').value.trim();
+  var mobile=document.getElementById('stuMobile').value.trim();
+  if(!name){toast('❌ નામ ભરો');return;}
+  if(!mobile||mobile.length<10){toast('❌ મોબાઈલ નંબર સાચો ભરો');return;}
+  var id=document.getElementById('stuId').value;
+  var obj={
+    id:id?Number(id):Date.now(),
+    name:name,
+    std:document.getElementById('stuStd').value,
+    board:document.getElementById('stuBoard').value,
+    batch:document.getElementById('stuBatch').value,
+    mobile:mobile,
+    fee:Number(document.getElementById('stuFee').value)||0,
+    join:document.getElementById('stuJoin').value,
+    status:document.getElementById('stuStatus').value,
+    notes:document.getElementById('stuNotes').value
+  };
+  if(id){
+    DB.students=DB.students.map(function(s){return s.id===obj.id?obj:s});
+  } else {
+    DB.students.push(obj);
+  }
+  saveDB();closeModal('stuModal');renderStudents();
+  toast('✅ વિદ્યાર્થી સેવ થયા');
+}
 
-                    tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="py-4 px-2 font-bold text-slate-800 text-xs">' + s.name + ' <span class="text-[9px] text-slate-400">(' + s.class + ')</span></td><td class="py-4 px-2 font-extrabold text-xs ' + (pending > 0 ? 'text-rose-600' : 'text-slate-400') + '">₹' + pending + '</td><td class="py-4 px-2 text-center"><button onclick="payFeeDialog(' + s.id + ', ' + pending + ')" class="text-[10px] uppercase font-black px-3 py-1.5 rounded-2xl transition ' + btnState + '" ' + disabledStr + '>જમા</button></td></tr>';
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        }
+function deleteStudent(id){
+  showConfirm(
+    'આ વિદ્યાર્થીને Delete કરવી છે?',
+    'આ વિદ્યાર્થીની બધી માહિતી કાઢી નાખાશે.',
+    function(){
+      id=Number(id);
+      DB.students=DB.students.filter(function(s){return Number(s.id)!==id});
+      saveDB();renderStudents();toast('🗑 વિદ્યાર્થી Delete થયા','#EF4444');
+    }
+  );
+}
 
-        function payFeeDialog(id, maxAmount) {
-            var amount = prompt("ફી જમા કરો (મહત્તમ બાકી: ₹" + maxAmount + "):", maxAmount);
-            if (amount === null) return;
-            
-            var payVal = parseInt(amount);
-            if (isNaN(payVal) || payVal <= 0 || payVal > maxAmount) {
-                alert("મહેરબાની કરીને સાચી રકમ દાખલ કરો.");
-                return;
-            }
+// ── FEES ──
+function populateFeeStudents(){
+  var sel=document.getElementById('feeStudent');
+  sel.innerHTML=DB.students.map(function(s){return '<option value="'+s.id+'">'+s.name+' ('+s.std+')</option>'}).join('');
+}
 
-            var student = students.find(function(s) { return s.id === id; });
-            if (student) {
-                student.paidFees += payVal;
-                student.lastPaidDate = new Date().toLocaleDateString('gu-IN');
-                saveData();
-                renderFees();
-            }
-        }
+function renderFees(){
+  var q=document.getElementById('feeSearch').value.toLowerCase();
+  var f=document.getElementById('feeFilter').value;
+  var list=DB.fees.filter(function(fee){
+    var n=stuName(fee.studentId).toLowerCase();
+    var match=n.indexOf(q)>=0;
+    var status=fee.paid>=fee.total?'paid':fee.paid>0?'partial':'pending';
+    var sf=f?status===f:true;
+    return match&&sf;
+  });
+  var tbody=document.getElementById('feeTbody');
+  if(!list.length){
+    tbody.innerHTML='<tr><td colspan="8"><div class="empty"><div class="empty-icon">💰</div><p>કોઈ ફી નોંધ નહીં</p></div></td></tr>';
+    return;
+  }
+  var sc={paid:'badge-green',partial:'badge-yellow',pending:'badge-red'};
+  var sl={paid:'ભર્યેલ',partial:'આંશિક',pending:'બાકી'};
+  tbody.innerHTML=list.map(function(fee){
+    var bal=Number(fee.total)-Number(fee.paid);
+    var pct=fee.total>0?Math.round(fee.paid/fee.total*100):0;
+    var status=bal<=0?'paid':fee.paid>0?'partial':'pending';
+    return '<tr>'+
+      '<td><b>'+stuName(fee.studentId)+'</b></td>'+
+      '<td>'+stuStd(fee.studentId)+'</td>'+
+      '<td>'+fee.month+'</td>'+
+      '<td>₹'+fee.total+'</td>'+
+      '<td>₹'+fee.paid+'</td>'+
+      '<td style="color:'+(bal>0?'var(--red)':'var(--green)')+'">₹'+bal+'</td>'+
+      '<td><span class="badge '+sc[status]+'">'+sl[status]+'</span>'+
+        '<div class="fee-bar"><div class="fee-bar-fill" style="width:'+pct+'%"></div></div>'+
+      '</td>'+
+      '<td><div class="action-btns">'+
+        '<button class="btn btn-sm btn-outline" onclick="editFee('+fee.id+')">✏️</button>'+
+        '<button class="btn btn-sm btn-red" onclick="deleteFee('+fee.id+')">🗑</button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
 
-        // --- TESTS ---
-        function loadTestsSelector() {
-            var select = document.getElementById('select-test');
-            select.innerHTML = '<option value="">ટેસ્ટ પસંદ કરો...</option>';
-            tests.forEach(function(t) {
-                select.innerHTML += '<option value="' + t.id + '">' + t.name + ' (' + t.class + ')</option>';
-            });
-            document.getElementById('test-marks-container').classList.add('hidden');
-            document.getElementById('test-placeholder').classList.remove('hidden');
-        }
+function openAddFee(){
+  populateFeeStudents();
+  document.getElementById('feeId').value='';
+  document.getElementById('feeTotal').value='';
+  document.getElementById('feePaid').value='';
+  document.getElementById('feeNote').value='';
+  document.getElementById('feeDate').value=new Date().toISOString().split('T')[0];
+  openModal('feeModal');
+}
 
-        function createTest(event) {
-            event.preventDefault();
-            var name = document.getElementById('test-name').value;
-            var cls = document.getElementById('test-class').value;
-            var total = parseInt(document.getElementById('test-total-marks').value);
+function editFee(id){
+  var f=DB.fees.find(function(x){return Number(x.id)===Number(id)});
+  if(!f)return;
+  populateFeeStudents();
+  document.getElementById('feeId').value=f.id;
+  setTimeout(function(){
+    document.getElementById('feeStudent').value=f.studentId;
+    document.getElementById('feeMonth').value=f.month;
+    document.getElementById('feeTotal').value=f.total;
+    document.getElementById('feePaid').value=f.paid;
+    document.getElementById('feeDate').value=f.date;
+    document.getElementById('feeMode').value=f.mode||'Cash';
+    document.getElementById('feeNote').value=f.note||'';
+  },10);
+  openModal('feeModal');
+}
 
-            var newTest = {
-                id: Date.now(),
-                name: name,
-                class: cls,
-                totalMarks: total,
-                marks: {}
-            };
+function saveFee(){
+  var studentId=document.getElementById('feeStudent').value;
+  var total=document.getElementById('feeTotal').value;
+  if(!studentId||!total){toast('❌ વિદ્યાર્થી અને ફી ભરો');return;}
+  var id=document.getElementById('feeId').value;
+  var obj={
+    id:id?Number(id):Date.now(),
+    studentId:Number(studentId),
+    month:document.getElementById('feeMonth').value,
+    total:Number(total),
+    paid:Number(document.getElementById('feePaid').value)||0,
+    date:document.getElementById('feeDate').value,
+    mode:document.getElementById('feeMode').value,
+    note:document.getElementById('feeNote').value
+  };
+  if(id){
+    DB.fees=DB.fees.map(function(f){return f.id===obj.id?obj:f});
+  } else {
+    DB.fees.push(obj);
+  }
+  saveDB();closeModal('feeModal');renderFees();
+  toast('✅ ફી સેવ થઈ');
+}
 
-            tests.push(newTest);
-            saveData();
-            document.getElementById('test-form').reset();
-            loadTestsSelector();
-        }
+function deleteFee(id){
+  showConfirm(
+    'આ ફી નોંધ Delete કરવી છે?',
+    'આ ફી એન્ટ્રી પાછી મેળવાશે નહીં.',
+    function(){
+      id=Number(id);
+      DB.fees=DB.fees.filter(function(f){return Number(f.id)!==id});
+      saveDB();renderFees();toast('🗑 ફી Delete','#EF4444');
+    }
+  );
+}
 
-        var activeTestId = null;
+// ── ATTENDANCE ──
+var attState={};
+function renderAttendance(){
+  var date=document.getElementById('attDate').value;
+  var batch=document.getElementById('attBatch').value;
+  var students=DB.students.filter(function(s){return s.status==='active'});
+  if(batch) students=students.filter(function(s){return s.batch===batch});
 
-        function renderTestMarks() {
-            var testId = document.getElementById('select-test').value;
-            if (!testId) {
-                document.getElementById('test-marks-container').classList.add('hidden');
-                document.getElementById('test-placeholder').classList.remove('hidden');
-                return;
-            }
+  attState=DB.attendance[date]||{};
 
-            activeTestId = parseInt(testId);
-            var test = tests.find(function(t) { return t.id === activeTestId; });
-            if (!test) return;
+  var grid=document.getElementById('attGrid');
+  if(!students.length){
+    grid.innerHTML='<div class="empty"><div class="empty-icon">👨‍🎓</div><p>આ Batch માં વિદ્યાર્થી નહીં</p></div>';
+    return;
+  }
 
-            document.getElementById('test-placeholder').classList.add('hidden');
-            document.getElementById('test-marks-container').classList.remove('hidden');
-            document.getElementById('test-total-label').innerText = "ગુણ (કુલ: " + test.totalMarks + ")";
+  grid.innerHTML='<div class="att-grid">'+students.map(function(s){
+    var st=attState[s.id]||'';
+    var cls=st==='P'?'present':st==='A'?'absent':st==='L'?'late':'';
+    var lbl=st==='P'?'✅ હાજર':st==='A'?'❌ ગેરહાજર':st==='L'?'⏰ મોડા':'— ચિહ્નિત નહીં';
+    return '<div class="att-item '+cls+'" id="att_'+s.id+'" onclick="cycleAtt('+s.id+')">'+
+      '<div class="att-name">'+s.name+'</div>'+
+      '<div class="att-status">'+lbl+'</div>'+
+    '</div>';
+  }).join('')+'</div>';
+  updateAttSummary(students);
+  renderAttSummaryTable();
+}
 
-            var tbody = document.getElementById('test-students-body');
-            tbody.innerHTML = '';
+function cycleAtt(id){
+  var cur=attState[id]||'';
+  attState[id]=cur===''?'P':cur==='P'?'A':cur==='A'?'L':'';
+  var el=document.getElementById('att_'+id);
+  var st=attState[id];
+  el.className='att-item '+(st==='P'?'present':st==='A'?'absent':st==='L'?'late':'');
+  el.querySelector('.att-status').textContent=st==='P'?'✅ હાજર':st==='A'?'❌ ગેરહાજર':st==='L'?'⏰ મોડા':'— ચિહ્નિત નહીં';
+  updateAttSummary(DB.students.filter(function(s){return s.status==='active'}));
+}
 
-            var classStudents = students.filter(function(s) { return s.class === test.class; });
+function updateAttSummary(students){
+  var p=students.filter(function(s){return attState[s.id]==='P'}).length;
+  var a=students.filter(function(s){return attState[s.id]==='A'}).length;
+  document.getElementById('attSummary').textContent='હાજર: '+p+' | ગેરહાજર: '+a+' | કુલ: '+students.length;
+}
 
-            if (classStudents.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="2" class="text-center py-6 text-slate-400">વિદ્યાર્થીઓ નથી.</td></tr>';
-                return;
-            }
+function saveAttendance(){
+  var date=document.getElementById('attDate').value;
+  DB.attendance[date]=JSON.parse(JSON.stringify(attState));
+  saveDB();toast('✅ હાજરી સેવ થઈ');
+  renderAttSummaryTable();
+}
 
-            classStudents.forEach(function(s) {
-                var currentScore = test.marks[s.id] !== undefined ? test.marks[s.id] : '';
-                tbody.innerHTML += '<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="py-3 px-2 font-bold text-slate-800 text-xs">' + s.name + '</td><td class="py-3 text-center"><input type="number" data-student-id="' + s.id + '" min="0" max="' + test.totalMarks + '" value="' + currentScore + '" class="stu-mark-input w-20 text-center px-2 py-1.5 border border-slate-200 focus:ring-2 focus:ring-violet-400 outline-none rounded-xl font-extrabold text-xs"></td></tr>';
-            });
-        }
+function renderAttSummaryTable(){
+  var students=DB.students.filter(function(s){return s.status==='active'});
+  var tbody=document.getElementById('attSummaryTbl');
+  tbody.innerHTML=students.map(function(s){
+    var present=0,absent=0,total=0;
+    Object.keys(DB.attendance).forEach(function(day){
+      var d=DB.attendance[day];
+      if(d[s.id]!==undefined){total++;if(d[s.id]==='P')present++;else if(d[s.id]==='A')absent++;}
+    });
+    var pct=total>0?Math.round(present/total*100):0;
+    return '<tr><td><b>'+s.name+'</b></td><td>'+total+'</td>'+
+      '<td><span class="badge badge-green">'+present+'</span></td>'+
+      '<td><span class="badge badge-red">'+absent+'</span></td>'+
+      '<td><span class="badge '+(pct>=75?'badge-green':'badge-red')+'">'+pct+'%</span></td></tr>';
+  }).join('');
+}
 
-        function saveMarks() {
-            if (!activeTestId) return;
-            var test = tests.find(function(t) { return t.id === activeTestId; });
-            if (!test) return;
+// ── MARKS ──
+function renderMarks(){
+  var f=document.getElementById('markFilter').value;
+  var sel=document.getElementById('markFilter');
+  var cur=sel.value;
+  sel.innerHTML='<option value="">બધા ટેસ્ટ</option>'+DB.tests.map(function(t){return '<option value="'+t.id+'">'+t.name+' ('+t.subject+')</option>'}).join('');
+  if(cur) sel.value=cur;
 
-            var inputs = document.querySelectorAll('.stu-mark-input');
-            var hasError = false;
+  var tests=DB.tests;
+  if(f) tests=tests.filter(function(t){return t.id==f});
 
-            inputs.forEach(function(input) {
-                var sId = input.getAttribute('data-student-id');
-                var val = input.value;
+  var container=document.getElementById('marksList');
+  if(!tests.length){
+    container.innerHTML='<div class="empty"><div class="empty-icon">📝</div><p>કોઈ ટેસ્ટ નહીં — ઉપર "+ ટેસ્ટ ઉમેરો" ક્લિક કરો</p></div>';
+    return;
+  }
 
-                if (val !== '') {
-                    var mark = parseInt(val);
-                    if (mark < 0 || mark > test.totalMarks) {
-                        hasError = true;
-                        input.classList.add('border-rose-500');
-                    } else {
-                        test.marks[sId] = mark;
-                        input.classList.remove('border-rose-500');
-                    }
-                } else {
-                    delete test.marks[sId];
-                }
-            });
+  container.innerHTML=tests.map(function(test){
+    var students=DB.students.filter(function(s){return s.std===test.std&&s.status==='active'});
+    return '<div class="card" style="margin-bottom:1rem">'+
+      '<div class="card-header">'+
+        '<span class="card-title">📝 '+test.name+' — '+test.subject+' ('+test.std+') | કુલ: '+test.totalMarks+'</span>'+
+        '<div style="display:flex;gap:.4rem">'+
+          '<span style="font-size:.8rem;color:var(--slate)">'+fmtDate(test.date)+'</span>'+
+          '<button class="btn btn-sm btn-red" onclick="deleteTest('+test.id+')">🗑</button>'+
+        '</div>'+
+      '</div>'+
+      '<div style="padding:1rem">'+
+        students.map(function(s){
+          var mark=(test.marks&&test.marks[s.id]!==undefined)?test.marks[s.id]:'';
+          var g=mark!==''?getGrade(mark,test.totalMarks):{g:'—',cls:'badge-yellow'};
+          return '<div class="marks-row">'+
+            '<span class="std-name">'+s.name+'</span>'+
+            '<input type="number" value="'+mark+'" min="0" max="'+test.totalMarks+'" placeholder="—" onchange="updateMark('+test.id+','+s.id+',this.value)" style="width:70px">'+
+            '<span>/ '+test.totalMarks+'</span>'+
+            '<span class="badge '+g.cls+' grade-badge">'+g.g+'</span>'+
+          '</div>';
+        }).join('')+
+        (!students.length?'<div style="color:var(--slate);font-size:.85rem">આ ધોરણ ('+test.std+') ના Active વિદ્યાર્થી નહીં</div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
 
-            if (hasError) {
-                alert("સાચા ગુણ દાખલ કરો.");
-                return;
-            }
+function saveTest(){
+  var name=document.getElementById('markName').value.trim();
+  if(!name){toast('❌ ટેસ્ટ નામ ભરો');return;}
+  DB.tests.push({
+    id:Date.now(),
+    name:name,
+    subject:document.getElementById('markSubject').value,
+    std:document.getElementById('markStd').value,
+    totalMarks:Number(document.getElementById('markTotal').value)||100,
+    date:document.getElementById('markDate').value,
+    marks:{}
+  });
+  document.getElementById('markName').value='';
+  saveDB();closeModal('markModal');renderMarks();
+  toast('✅ ટેસ્ટ ઉમેરાયો');
+}
 
-            saveData();
-            alert("પરિણામ સફળતાપૂર્વક સાચવવામાં આવ્યું છે.");
-            renderTestMarks();
-        }
+function updateMark(testId,stuId,val){
+  var t=DB.tests.find(function(x){return x.id===testId});
+  if(!t)return;
+  if(!t.marks)t.marks={};
+  t.marks[stuId]=Number(val);
+  saveDB();
+  // Re-render to update grades
+  renderMarks();
+}
 
-        // INITIALISATION ON LOAD
-        try {
-            renderDashboard();
-        } catch (e) {
-            console.error("Initialization error", e);
-        }
-    </script>
+function deleteTest(id){
+  showConfirm(
+    'આ ટેસ્ટ Delete કરવો છે?',
+    'બધા વિદ્યાર્થીઓના માર્ક્સ પણ કાઢી નાખાશે.',
+    function(){
+      id=Number(id);
+      DB.tests=DB.tests.filter(function(t){return Number(t.id)!==id});
+      saveDB();renderMarks();toast('🗑 ટેસ્ટ Delete','#EF4444');
+    }
+  );
+}
+
+// ── HOMEWORK ──
+function renderHomework(){
+  var list=document.getElementById('hwList');
+  if(!DB.homework.length){
+    list.innerHTML='<div class="empty"><div class="empty-icon">📚</div><p>કોઈ Homework નહીં</p></div>';
+    return;
+  }
+  list.innerHTML=DB.homework.slice().reverse().map(function(h){
+    return '<div class="notice-card">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div>'+
+          '<div class="notice-title">📚 '+h.subject+' — '+h.std+'</div>'+
+          '<div class="notice-meta">આપ્યા: '+fmtDate(h.given)+' | જમા: '+fmtDate(h.due)+'</div>'+
+          '<div class="notice-body">'+h.desc+'</div>'+
+        '</div>'+
+        '<button class="btn btn-sm btn-red" onclick="deleteHW('+h.id+')">🗑</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function saveHomework(){
+  var desc=document.getElementById('hwDesc').value.trim();
+  if(!desc){toast('❌ વિગત ભરો');return;}
+  DB.homework.push({
+    id:Date.now(),
+    subject:document.getElementById('hwSubject').value,
+    std:document.getElementById('hwStd').value,
+    given:document.getElementById('hwGiven').value,
+    due:document.getElementById('hwDue').value,
+    desc:desc
+  });
+  document.getElementById('hwDesc').value='';
+  saveDB();closeModal('hwModal');renderHomework();
+  toast('✅ Homework ઉમેરાઈ');
+}
+
+function deleteHW(id){
+  showConfirm(
+    'Homework Delete કરવી છે?',
+    '',
+    function(){
+      id=Number(id);
+      DB.homework=DB.homework.filter(function(h){return Number(h.id)!==id});
+      saveDB();renderHomework();toast('🗑 Homework Delete','#EF4444');
+    }
+  );
+}
+
+// ── TIMETABLE ──
+var DAYS=['સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
+var TIMES=['7:00–8:00','8:00–9:00','9:00–10:00','4:00–5:00','5:00–6:00','6:00–7:00'];
+
+function renderTimetable(){
+  var batch=document.getElementById('ttBatch').value;
+  var grid=document.getElementById('ttGrid');
+  var tt=DB.timetable[batch]||{};
+
+  var html='<div class="tt-head"></div>';
+  DAYS.forEach(function(d){html+='<div class="tt-head">'+d+'</div>'});
+
+  TIMES.forEach(function(t){
+    html+='<div class="tt-time">'+t+'</div>';
+    DAYS.forEach(function(d){
+      var key=t+'_'+d;
+      var val=tt[key]||'';
+      var cls=val?'tt-cell filled':'tt-cell';
+      html+='<div class="'+cls+'" onclick="openTTCell(\''+key+'\',\''+val+'\')">'+(val||'—')+'</div>';
+    });
+  });
+
+  grid.innerHTML=html;
+}
+
+function openTTCell(key, val){
+  document.getElementById('ttKey').value=key;
+  document.getElementById('ttSubject').value=val||'';
+  document.getElementById('ttModalTitle').textContent='Class ઉમેરો ('+key.split('_')[1]+')';
+  openModal('ttModal');
+}
+
+function saveTTCell(){
+  var key=document.getElementById('ttKey').value;
+  var val=document.getElementById('ttSubject').value;
+  var batch=document.getElementById('ttBatch').value;
+  if(!DB.timetable[batch]) DB.timetable[batch]={};
+  if(val) DB.timetable[batch][key]=val;
+  else delete DB.timetable[batch][key];
+  saveDB();closeModal('ttModal');renderTimetable();
+  toast('✅ Timetable સેવ થઈ');
+}
+
+function clearTimetable(){
+  showConfirm(
+    'આ Batch નો ટાઈમટેબલ ખાલી કરવો છે?',
+    'બધા સ્લોટ કાઢી નાખાશે.',
+    function(){
+      var batch=document.getElementById('ttBatch').value;
+      DB.timetable[batch]={};
+      saveDB();renderTimetable();toast('🗑 Timetable ખાલી','#EF4444');
+    }
+  );
+}
+
+// ── NOTICES ──
+function renderNotices(){
+  var list=document.getElementById('noticeList');
+  if(!DB.notices.length){
+    list.innerHTML='<div class="empty"><div class="empty-icon">📢</div><p>કોઈ Notice નહીં</p></div>';
+    return;
+  }
+  var typeColors={'સામાન્ય':'badge-blue','પરીક્ષા':'badge-red','રજા':'badge-green','ઈવેન્ટ':'badge-purple','ફી':'badge-yellow'};
+  list.innerHTML=DB.notices.slice().reverse().map(function(n){
+    var tc=typeColors[n.type]||'badge-blue';
+    return '<div class="notice-card">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div style="flex:1">'+
+          '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem">'+
+            '<span class="badge '+tc+'">'+n.type+'</span>'+
+            '<span class="notice-title">'+n.title+'</span>'+
+          '</div>'+
+          '<div class="notice-meta">'+fmtDate(n.date)+'</div>'+
+          '<div class="notice-body">'+n.body+'</div>'+
+        '</div>'+
+        '<div class="action-btns">'+
+          '<button class="btn btn-sm btn-outline" onclick="editNotice('+n.id+')">✏️</button>'+
+          '<button class="btn btn-sm btn-red" onclick="deleteNotice('+n.id+')">🗑</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function saveNotice(){
+  var title=document.getElementById('noticeTitle').value.trim();
+  var body=document.getElementById('noticeBody').value.trim();
+  if(!title||!body){toast('❌ શીર્ષક અને સંદેશ ભરો');return;}
+  var editId=document.getElementById('noticeEditId').value;
+  if(editId){
+    var eid=Number(editId);
+    DB.notices=DB.notices.map(function(n){return n.id===eid?{id:eid,title:title,type:document.getElementById('noticeType').value,body:body,date:new Date().toISOString().split('T')[0]}:n});
+  } else {
+    DB.notices.push({
+      id:Date.now(),
+      title:title,
+      type:document.getElementById('noticeType').value,
+      body:body,
+      date:new Date().toISOString().split('T')[0]
+    });
+  }
+  document.getElementById('noticeEditId').value='';
+  document.getElementById('noticeTitle').value='';
+  document.getElementById('noticeBody').value='';
+  saveDB();closeModal('noticeModal');renderNotices();
+  toast('✅ Notice સેવ થઈ');
+}
+
+function editNotice(id){
+  var n=DB.notices.find(function(x){return Number(x.id)===Number(id)});
+  if(!n)return;
+  document.getElementById('noticeEditId').value=n.id;
+  document.getElementById('noticeTitle').value=n.title;
+  document.getElementById('noticeType').value=n.type;
+  document.getElementById('noticeBody').value=n.body;
+  openModal('noticeModal');
+}
+
+function deleteNotice(id){
+  showConfirm(
+    'Notice Delete કરવી છે?',
+    '',
+    function(){
+      id=Number(id);
+      DB.notices=DB.notices.filter(function(n){return Number(n.id)!==id});
+      saveDB();renderNotices();toast('🗑 Notice Delete','#EF4444');
+    }
+  );
+}
+
+// ── RESPONSIVE DASHBOARD GRID ──
+function handleResize(){
+  var dg=document.getElementById('dashGrid');
+  if(window.innerWidth<700){
+    dg.style.gridTemplateColumns='1fr';
+  } else {
+    dg.style.gridTemplateColumns='1fr 1fr';
+  }
+}
+window.addEventListener('resize',handleResize);
+handleResize();
+</script>
 </body>
 </html>
